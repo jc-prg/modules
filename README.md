@@ -11,4 +11,4 @@ This collection consists of several JavaScript-modules that are share over my pr
 
 ## Disclaimer
 
-At the moment this modules are build to work for my software projects and my help you for your projects also. My intention is to make them easily usable for other projects also.
+At the moment this modules are build to work for my software projects and may help you for your projects also. My intention is to make them easily usable for other projects also.
