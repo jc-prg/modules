@@ -1,0 +1,54 @@
+.vorschau {
+	height: 70px;
+	border: 1px solid #000;
+	margin: 5px 5px 0 0;
+	border-radius: 3px;
+}
+
+.droparea {
+	padding: 3px;
+	border : 1px dashed gray;
+	border-radius:5px;
+	overflow:auto;
+	height:125px;
+	width:150px;
+        float:left;
+	background:#eeeeee;
+	margin:2px;
+        display:none;
+}
+
+@media (min-width: 380px) {
+	.droparea { display : block; }
+	}
+
+.upload {
+	padding: 3px;
+	border : 1px solid gray;
+	border-radius:5px;
+	overflow:hidden;
+	height:125px;
+	width:300px;
+        float:left;
+	background:#eeeeee;
+	margin:2px;
+}
+
+.progessbar {
+	width:135px;
+	margin-top:15px;
+}
+
+.uploadCol {
+        float:left;
+	width:135px;
+	margin:3px;
+	font-size: 12px;
+	//border:1px solid;
+}
+
+output {
+	display: block;
+}
+
+

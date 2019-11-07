@@ -1,0 +1,60 @@
+.authDialog {
+	font-variant:initial;
+	font-weight:normal;
+	}
+
+.authData {
+	color: lightgray;
+	float: right;
+	font-style: italic;
+	cursor: pointer;
+	margin-right: 10px;
+	}
+
+.authInputPwd {
+	width: 160px;
+	padding: 15px;
+	color: gray;
+	}
+
+.authEye {
+	height:24px;
+	width:24px;
+	position: relative;
+	right: 30px;
+	top: 7px;
+	cursor:pointer;
+	}
+
+.authInput {
+	position: relative;
+	left: 15px;
+	}
+
+.authCloseButton {
+	background-color: red;
+	color: white;
+	font-weight: bold;
+	width: 140px;
+	margin: 0 auto;
+	padding: 5px;
+	}
+
+.authLoginButton {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	width: 140px;
+	margin: 0 auto;
+	padding: 5px;
+	}
+
+.authEmptyButton {
+	font-variant: initial;
+	color: white;
+	background-color: gray;
+	width: 25px;
+	padding: 5px;
+	position: relative;
+	right: 21px;
+	}
