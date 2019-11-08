@@ -6,7 +6,7 @@ This collection consists of several JavaScript-modules that are share over my pr
 * _jc-cookie:_ class to save and read cookies
 * _jc-msg:_ class to create alerts or confirm messages as an overlay
 * _jc-player:_ class to create a simple HTML5 player
-* _jc-upload:_ not ready jet
+* _jc-upload:_ scripts to upload files (used by jc://mbox/)
 * _jc-boxes:_ not ready jet
 
 ## Disclaimer
