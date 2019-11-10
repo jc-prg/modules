@@ -38,7 +38,7 @@ function jcMsg(app_name,app_link="") {
 		message += "<table border='0' style='width:100%'><tr><td valign='top'><br/>";
 		message += text;
 		message += "</td><td style='width:100px'>";
-		message += "<img src='img/waiting2.gif' style='height:100px;width:100px;'>";
+		message += "<img src='apps/jc-msg/img/waiting2.gif' style='height:100px;width:100px;'>";
 		message += "</td></tr></table>";
 
 		this.body.style.backgroundSize     = "100px";
@@ -58,7 +58,7 @@ function jcMsg(app_name,app_link="") {
 	//-----------------------------
 	this.wait = function (text="", callback="") {
 		this.show();
-		this.body.style.backgroundImage    = "url('img/waiting.gif')";
+		this.body.style.backgroundImage    = "url('apps/jc-msg/img/waiting.gif')";
 		this.body.style.backgroundRepeat   = "no-repeat";
 		this.body.style.backgroundPosition = "center";
 		this.body.style.backgroundSize     = "100px";
