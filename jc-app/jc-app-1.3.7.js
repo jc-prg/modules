@@ -25,7 +25,7 @@ var jcAppTest    = true;
 function jcApp( name, url, list_cmd, send_cmd ) {
 
 	this.appName      = name;
-	this.appVersion   = "v1.3.6";
+	this.appVersion   = "v1.3.7";
 	this.appStatField = name + "_status";
 	this.appUrl       = url;
 	this.appList      = list_cmd;
@@ -173,7 +173,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		var transfer_cmd 	= "";
 		
 		if (Array.isArray(callback_array))      { callback = callback_array[0]; callback_param = callback_array[1]; }
-		else                                    {  callback = callback_array; }
+		else                                    { callback = callback_array;    callback_param = "";}
 
 		// create request URL
 		var requestURL	 	= this.appUrl + this.appSend + cmd[0];
@@ -223,7 +223,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				if (app.appErrorHide == false) 	app.elementVisible(app.appTarget);
 				if (app.appErrorHide == false) 	app.elementHidden(app.appError);
 				if (app.loadWhenSend) 		app.load("loadWhenSend");
-				if (callback) 			callback(data);
+				if (callback) 			callback(data,callback_param);
 				}
 			else if (xhttp.readyState > 3 && xhttp.status>=400) {
 				// finished (.readyState = 4) but error
@@ -236,7 +236,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 	                        if (app.appErrorHide == false) 	app.elementHidden(app.appTarget);
         	                if (app.appErrorHide == false) 	app.elementVisible(app.appError);
-                	        if (callback) 			callback();
+                	        if (callback) 			callback({},callback_param);
 				}
 			}
 
