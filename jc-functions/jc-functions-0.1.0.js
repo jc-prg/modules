@@ -97,12 +97,12 @@ function jcTooltip(name) {
 		else if (this.react_on == "other")   {}  // external activation
 	
 		var text = "";
-	        text += "<div class='jc_tooltip' "+react_on_cmd+">";
+	        text += "<span class='jc_tooltip' "+react_on_cmd+" style='float:left;'>";
 	        text += parent_element;
 	        text += "<span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
         	text += "<span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
 	        text += "<span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" "+style_tt+">" + tooltip_text + "</span>";
-        	text += "</div>";
+        	text += "</span>";
 		return text;
 		}
 
