@@ -1,0 +1,15 @@
+{
+	"empty" : "filename.png",
+	"back"  : "back.png",
+	"first" : "first.png",
+	"exit"  : "exit.png",
+	"info"  : "info.png",
+	"last"  : "last.png",
+	"next"  : "next.png",
+	"ffw"   : "next.png",
+	"fbw"   : "back.png",
+	"open"  : "open.png",
+	"play"  : "play.png",
+	"pause" : "pause.png",
+	"stop"  : "stop.png"
+}
