@@ -11,6 +11,8 @@ jc-app/jc-tab.css
 
 *.swp
 
+*~
+
 jc-msg/jc-msg-1.1.2.css
 
 jc-msg/jc-msg-1.1.2.js
