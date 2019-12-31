@@ -92,7 +92,8 @@ function jcMsg(app_name,app_link="") {
 	// alert return message (API)
 	//-----------------------------
 	this.alertReturn = function (data, callback="") {
-        	msg = data["ReturnMsg"];
+	        if (data["ReturnMsg"]) 		{ msg = data["ReturnMsg"]; }          // older apps
+	        if (data["REQUEST"]["Return"])	{ msg = data["REQUEST"]["Return"]; }  // newer apps
         	this.alert(msg,callback);
         	}
 
