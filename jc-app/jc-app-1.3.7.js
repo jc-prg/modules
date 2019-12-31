@@ -168,10 +168,12 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	// send cmd to rest API
 	this.requestAPI = function( method, cmd, data, callback_array="", wait_till_executed="", source="") {
 
+		//console.log("Test: "+method+" - "+cmd[0]);
+
 		var app  	 	= this;
 		var start_time	 	= new Date();
 		var transfer_cmd 	= "";
-		
+
 		if (Array.isArray(callback_array))      { callback = callback_array[0]; callback_param = callback_array[1]; }
 		else                                    { callback = callback_array;    callback_param = "";}
 
@@ -189,11 +191,11 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		if (accepted_methods.indexOf(method)<0) { console.error( this.appName + ": RequestAPI - ERROR, method not allowed ("+method+"/"+source+")." ); return; }
 
 		// asynchronous transfers per default, synchronous transfer if requested
-		var asyncronous = true;	 		
-		if (wait_till_executed == "wait") { 			
+		var asyncronous = true;
+		if (wait_till_executed == "wait") {
 			console.debug("Synchronous tranfer used for request: " + requestURL);
 			asyncronous = false;
-			}		
+			}
 
 		if (jcAppTest) { console.debug( "Request: " + this.appName + " - " + method + " / " + requestURL + " ("+source+")"); }
 
@@ -223,7 +225,8 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				if (app.appErrorHide == false) 	app.elementVisible(app.appTarget);
 				if (app.appErrorHide == false) 	app.elementHidden(app.appError);
 				if (app.loadWhenSend) 		app.load("loadWhenSend");
-				if (callback) 			callback(data,callback_param);
+				if (callback_param != "") 	{ if (callback) { callback(data,callback_param); } }
+				else				{ if (callback) { callback(data); } }
 				}
 			else if (xhttp.readyState > 3 && xhttp.status>=400) {
 				// finished (.readyState = 4) but error
@@ -238,12 +241,15 @@ function jcApp( name, url, list_cmd, send_cmd ) {
         	                if (app.appErrorHide == false) 	app.elementVisible(app.appError);
                 	        if (callback) 			callback({},callback_param);
 				}
+			else {
+              			//console.debug( 'Debug: ' + app.appName + ' - ' + requestURL + ' (' + xhttp.status + '/' + xhttp.readyState + ').');
+				}
 			}
 
 		xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		
+
 		// set timeout if defined
-		if (this.timeout > -1) {
+		if (this.timeout > -1 && asyncronous) {
 			xhttp.ontimeout = function () { console.error("The request for " + requestURL + " timed out.");	};
 			xhttp.timeout = this.timeout;
 			}
@@ -266,7 +272,6 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 		*/
 		}
-
 
 	// send cmd to rest API - initial => to stay compartible
 	this.sendCmd     = function( cmd, callback, wait="" ) {
