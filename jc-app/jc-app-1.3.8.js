@@ -25,7 +25,7 @@ var jcAppTest    = true;
 function jcApp( name, url, list_cmd, send_cmd ) {
 
 	this.appName      = name;
-	this.appVersion   = "v1.3.7";
+	this.appVersion   = "v1.3.8";
 	this.appStatField = name + "_status";
 	this.appUrl       = url;
 	this.appList      = list_cmd;
@@ -255,7 +255,8 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			xhttp.timeout = this.timeout;
 			}
 
-		if (data)	{ xhttp.send(JSON.stringify(data)); }
+		//if (body_data)	{ xhttp.send(body_data); }
+		if (body_data)	{ xhttp.send(JSON.stringify(body_data)); }
 		else		{ xhttp.send(); }
 
 		/*

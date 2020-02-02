@@ -41,7 +41,7 @@ function jcMsg(app_name,app_link="") {
 		message += "<table border='0' style='width:100%'><tr><td valign='top'><br/>";
 		message += text;
 		message += "</td><td style='width:100px'>";
-		message += "<img src='"+this.waiting_img[0]+"' style='height:100px;width:100px;'>";
+		message += "<img src='"+this.waiting_img[0]+"' style='height:100px;width:100px;' class='jcMsgImg'>";
 		message += "</td></tr></table>";
 
 		this.body.style.backgroundSize     = "100px";
@@ -149,13 +149,13 @@ function jcMsg(app_name,app_link="") {
 
 	// show message
 	//-----------------------------
-	this.show = function () {
+	this.show = function (param="") {
 		this.cover.style.display = "block";
 		}
 
 	// hide message
 	//-----------------------------
-	this.hide = function () {
+	this.hide = function (param="") {
 		this.cover.style.display = "none";
 		this.body.style.backgroundImage = "";
 		}
