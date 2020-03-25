@@ -2,6 +2,7 @@
 // jc://volume-slider/
 //-----------------------------------------
 // slider for volume control
+// requires jc-volume-slider-<version>.css
 //-----------------------------------------
 /* INDEX
 
@@ -23,8 +24,8 @@ function slider ( name, container )
 /* SAMPLE IMPLEMENTATION
 
 var mboxSlider  = new jcSlider( name="mboxSlider", container="audio_slider");
-mboxSlider.setPosition(top="45px",bottom=false,left=false,right="10px");
 mboxSlider.init(0,100,mbox_device);
+mboxSlider.setPosition(top="45px",bottom=false,left=false,right="10px");
 mboxSlider.setOnChange(mboxVolumeSet);
 mboxSlider.setShowVolume(mboxVolumeShow);
 

@@ -1,12 +1,41 @@
 //--------------------------------------------------
 // local HTML5 javascript player
 //--------------------------------------------------
-/*
+/* INDEX
+function jcPlayer(name,element,music_url="", cover_url="", app_url="")
+	this.init  	= function()
+	this.button 	= function(img)
+	this.scroll_to 	= function(element)
+	this.load  	= function(data)
+	this.update 	= function()
+	this.musicStatus= function()
+
+ 	this.audio.onended 	= function()
+	
+	this.play  = function()
+	this.pause = function()
+	this.stop  = function()
+	this.next  = function()
+	this.last  = function()
+	
+	this.volumeSet  = function(vol)
+	this.volumeUp   = function()
+	this.volumeDown = function()
+	this.volumeMute = function()
+	
+	this.sort_list 	= function(tracks)
+	this.sortNumber = function(a,b)
+	this.setTextById= function(id,text)
+*/
+//--------------------------------------------------
+/* IMPLEMENTATION
 
 var player = new jcPlayer("player","div_player","/music/","/cover/");
 player.load( data );
 
+*/
 //--------------------------------------------------
+/* DATA STRUCTURE
 
 data = {
 	"album" : {
