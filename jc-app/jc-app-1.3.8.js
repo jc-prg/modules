@@ -203,15 +203,15 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		var xhttp = new XMLHttpRequest();
                 xhttp.open( method, requestURL, asyncronous );
 		xhttp.onreadystatechange = function () { // see status ...
-		//xhttp.onloadend = function () { // see status ...
+			//xhttp.onloadend = function () { // see status ...
 		        if (xhttp.readyState > 3 && xhttp.status>=200 && xhttp.status<300) {
 				// success
 				// .readyState -> 0: request not initialized; 1: server connection established; 2: request received; 3: processing request; 4: request finished and response is ready
 				// .status -> http return codes 2xx OK, 3xx redirect, 4xx client error, 5xx server error
 				var data = JSON.parse(xhttp.responseText);
 
-				console.debug(app.appName + ": " +requestURL);
-				console.debug(data);
+				console.debug(app.appName + " " + method + ": " + requestURL + " - OK");
+				//console.debug(data);
 
               			app.errorLog( 'Success: ' + app.appName + ' - ' + requestURL + ' (' + xhttp.status + ').',start_time);
 				app.setStatus('running');
@@ -222,14 +222,21 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				if (!data["REQUEST"]) { data["REQUEST"] = {}; }
 				data["REQUEST"]["load-time-app"] = m-start_time;
 				data["REQUEST"]["request-url"]   = requestURL;
+				data["REQUEST"]["request-type"]  = method;
 
 				if (app.appErrorHide == false) 	app.elementVisible(app.appTarget);
 				if (app.appErrorHide == false) 	app.elementHidden(app.appError);
 				if (app.loadWhenSend) 		app.load("loadWhenSend");
+				
 				if (callback_param != "") 	{ if (callback != "") { callback(data,callback_param); } }
 				else				{ if (callback != "") { callback(data); } }
+
+				console.debug(app.appName + ": " + requestURL + " - Finished");
 				}
 			else if (xhttp.readyState > 3 && xhttp.status>=400) {
+
+				console.debug(app.appName + " " + method + ": " + requestURL + " - ERROR, see error log.");
+
 				// finished (.readyState = 4) but error
 				try		{ var data = JSON.parse(xhttp.responseText); }
 				catch(e)	{ var data = {}; data["detail"] = xhttp.responseText; }
