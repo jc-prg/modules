@@ -38,6 +38,7 @@ function jcSlider ( name, container ) {
 
 	this.appName      = name;
 	this.appContainer = container;
+	this.appVersion   = "v0.1.0";
 	this.callOnChange = this.info;
 	this.showVolume   = this.info;
 	
