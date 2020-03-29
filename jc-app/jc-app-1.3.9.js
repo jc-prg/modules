@@ -6,9 +6,10 @@
 // var myApp   = new jcApp( "myApp", RESTurl, "remote/list/", "remoteSend/");     // cmd: <device>/<cmd>
 // myApp.init( "data_log", "error_log", reloadInterval, printAppStatus );
 // myApp.loadWhenSend = true;
-// myApp.callback     = true; // sendCmd -> use 2nd param as callback function (if exist)
-// myApp.load( );
-// myApp.setAutoupdate( );
+// myApp.callback     = true;	// sendCmd -> use 2nd param as callback function (if exist)
+// myApp.load();		// initial load
+// myApp.setAutoupdate();	// use to start interval
+// myApp.requestAPI_init();	// use if you want to use a queue
 //
 // function printAppStatus(data) {
 //	document.write(data[]);
@@ -25,7 +26,7 @@ var jcAppTest    = true;
 function jcApp( name, url, list_cmd, send_cmd ) {
 
 	this.appName      = name;
-	this.appVersion   = "v1.3.8";
+	this.appVersion   = "v1.3.9";
 	this.appStatField = name + "_status";
 	this.appUrl       = url;
 	this.appList      = list_cmd;
