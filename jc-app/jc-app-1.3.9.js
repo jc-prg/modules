@@ -25,27 +25,28 @@ var jcAppTest    = true;
 
 function jcApp( name, url, list_cmd, send_cmd ) {
 
-	this.appName      = name;
-	this.appVersion   = "v1.3.9";
-	this.appStatField = name + "_status";
-	this.appUrl       = url;
-	this.appList      = list_cmd;
-	this.appSend      = send_cmd;
+	this.appName        = name;
+	this.appVersion     = "v1.3.9";
+	this.appStatField   = name + "_status";
+	this.appUrl         = url;
+	this.appList        = list_cmd;
+	this.appSend        = send_cmd;
 
-	this.appData      = {};		// data, got by load
-	this.appSendData  = {};		// data, got by last used command
-	this.appHideError = false;	// if error log should not be shown automaticly, set true
+	this.appData        = {};		// data, got by load
+	this.appSendData    = {};		// data, got by last used command
+	this.appHideError   = false;	// if error log should not be shown automaticly, set true
 
-	this.errorList    = [];
-	this.errorCount   = 50;
-	this.loadWhenSend = false;
-	this.async        = true;
-	this.lastConnect  = 0;
-	this.timeout      = -1;
+	this.errorList      = [];
+	this.errorCount     = 50;
+	this.loadWhenSend   = false;
+	this.async          = true;
+	this.lastConnect    = 0;
+	this.timeout        = -1;
 	
-	this.queue	  = [];
-	this.use_queue    = false;
-	this.execute      = false;
+	this.queue	    = [];
+	this.use_queue      = false;
+	this.execute        = false;
+	this.queue_interval = 500;
 
 	// add container for data & error messages (if <body id="this.appName">) 
 	if (document.getElementById(this.appName)) {
@@ -170,24 +171,28 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		return;
 		}
 		
-	// try .... start queue
+	//-----------------------------
+	// requestAPI
+	//-----------------------------
+	
+	// start queue
 	this.requestAPI_init = function() {
 		this.use_queue = true;
-		if (this.timeout == -1) { this.timeout = 5000; }
+		if (this.timeout == -1) { this.timeout = 10000; }
 		jcAppInterval  = this;
-		setInterval(function(){ jcAppInterval.requestAPI_queue(); }, 500);
+		setInterval(function(){ jcAppInterval.requestAPI_queue(); }, this.queue_interval);
 		}
 
-	// try ..... add to queue
+	// add to queue
 	this.requestAPI = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
 		if (this.use_queue)	{ this.queue.push( [ method, cmd, body_data, callback_array, wait_till_executed, source ] ); }
 		else			{ this.requestAPI_execute( method, cmd, body_data, callback_array, wait_till_executed, source ); }
 		}
 
-	// try ..... execute from queue
+	// execute from queue
 	this.requestAPI_queue = function() {
 		if (this.queue.length > 0) {
-			if (this.queue.length > 1 && this.queue[0] == this.queue[1]) { this.queue.shift(); }
+			//if (this.queue.length > 1 && this.queue[0] == this.queue[1]) { this.queue.shift(); }
 			[ method, cmd, body_data, callback_array, wait_till_executed, source ] = this.queue[0];
 			this.queue.shift(); 
 			this.execute = true;
@@ -197,8 +202,6 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 	// send cmd to rest API
 	this.requestAPI_execute = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
-
-		//console.log("Test: "+method+" - "+cmd[0]);
 
 		var app  	 	= this;
 		var start_time	 	= new Date();
@@ -314,25 +317,28 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		*/
 		}
 
+	//-----------------------------
+
 	// send cmd to rest API - initial => to stay compartible
 	this.sendCmd     = function( cmd, callback, wait="" ) {
 		var data = {};
-		this.requestAPI("GET", cmd, data, callback, wait, "sendCmd");
+		this.requestAPI_execute("GET", cmd, data, callback, wait, "sendCmd");
 		}
 
 	// send cmd to rest API (synchronuous) => to stay compartible
 	this.sendCmdSync = function( cmd, callback ) {
 		var data = {};
-		this.requestAPI("GET", cmd, data, callback, "wait", "sendCmdSync");
+		this.requestAPI_execute("GET", cmd, data, callback, "wait", "sendCmdSync");
 		}
 
 	// send cmd to rest API including a password => to stay compartible
 	this.sendCmdPwd     = function( cmd, pwd, callback ) {
 		var data = {};
 		cmd.push( pwd );
-		this.requestAPI("GET", cmd, data, callback, "", "sendCmdPwd");
+		this.requestAPI_execute("GET", cmd, data, callback, "", "sendCmdPwd");
 		}
 
+	//-----------------------------
 
 	// set auto update
 	this.setAutoupdate = function(callback="") {
