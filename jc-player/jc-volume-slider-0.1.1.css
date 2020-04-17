@@ -44,6 +44,7 @@
 
 .slidervalue {
   position : relative;
+  z-index   : 99;
   top      : 185px;
   right    : -30px;
   
@@ -69,7 +70,7 @@
 	width		: 250px;
 	transform	: rotate(270deg);
 	
-	z-index		: 100;
+	z-index		: 99;
 	font-family	: Sans-serif, Arial, Helvetica;
 	font-size	: 12px;	
 	color		: #444444;
