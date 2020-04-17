@@ -84,6 +84,7 @@ function jcSlider ( name, container ) {
 			this.slider_active		= false;
 
 			this.container.style.position 	= "fixed";
+			this.container.style.zIndex     = 98;
 			
 			if (this.posBottom != false)	{ this.container.style.bottom = this.posBottom; } 	else { this.container.style.bottom = ""; }
 			if (this.posTop    != false)	{ this.container.style.top    = this.posTop; }		else { this.container.style.top	= ""; }
