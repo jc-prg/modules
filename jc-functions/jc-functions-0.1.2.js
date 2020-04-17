@@ -6,6 +6,8 @@
 /* INDEX:
 function onmousedown_left_right(event,command_left,command_right) {
 function convert_second2time(seconds) {
+function setValueById(id, text) {
+function getValueById(id, text) {
 function setTextById(id, text) {
 function getTextById(id, text) {
 function addTextById(id, text="") {
@@ -15,6 +17,7 @@ function elementHidden(id,debug="") {
 function elementVisible(id) {
 function changeVisibility(id) {
 function writeKeyBoard () {
+function sortDict(dict,sort_key) {
 function sortNumber(a,b) {
 function jcTooltip(name) {
 	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="") {
@@ -52,6 +55,20 @@ function convert_second2time(seconds) {
 	if (sec < 10) { sec = "0"+sec; }
 	return (min+":"+sec);
 	}
+
+//--------------------------------
+// set & get text to element
+//--------------------------------
+
+function setValueById(id, text) {
+  	if (document.getElementById(id))      { document.getElementById(id).value = text; }
+  	else                                  { console.debug("Element not found: "+id+" (setTextById)"); }
+  	}
+
+function getValueById(id, text) {
+  	if (document.getElementById(id))      { return document.getElementById(id).value; }
+  	else                                  { console.debug("Element not found: "+id+" (getTextById)"); }
+  	}
 
 //--------------------------------
 // set & get text to element
@@ -132,6 +149,32 @@ function writeKeyBoard () {
    return test;
    }
 
+//--------------------------------
+// sort dictionary
+//--------------------------------
+
+function sortDict(dict,sort_key) {
+
+	var sortAsNumber = false;
+	var order        = [];
+	var sorted       = {};
+	
+	for (key in dict) {
+		sorted[dict[key][sort_key]] = key;
+		if (Number.isInteger(dict[key][sort_key])) { sortAsNumber = true; }
+		}
+		
+	var order_key  = Object.keys(sorted);
+	if (sortAsNumber) 	{ order_key.sort(sortNumber); }
+	else			{ order_key.sort(); }
+
+	for (var i=0;i<order_key.length;i++) {
+		order.push(sorted[order_key[i]]);
+		}
+				
+	return order;
+	}
+	
 //--------------------------------------
 
 function sortNumber(a,b) {
@@ -178,10 +221,11 @@ function jcTooltip(name) {
         	text += "</span>";
 		return text;
 		}
+		
+	this.create_right_left = function (parent_element, tooltip_text, name, left="") {
+		}
 
 	this.show = function (name) {
-	
-	
 		elementVisible("jc_triangle1_" + name);
 		elementVisible("jc_triangle2_" + name);
 		elementVisible("jc_tooltiptext_" + name);
@@ -217,9 +261,12 @@ function jcTooltip(name) {
 
 //--------------------------------
 
-function check_if_element_or_value(name_value) {
+function check_if_element_or_value(name_value,lowercase=false) {
         if (name_value == "")                                                                   { console.error("check_if_element_or_value: no value"); return; }
-	if (document.getElementById(name_value) && document.getElementById(name_value).value) 	{ return document.getElementById(name_value).value.toLowerCase(); }
+	if (document.getElementById(name_value) && document.getElementById(name_value).value) 	{ 
+		if (lowercase)	{ return document.getElementById(name_value).value.toLowerCase(); }
+		else 		{ return document.getElementById(name_value).value; }
+		}
 	else					                                                { return name_value; }
 	}
 
