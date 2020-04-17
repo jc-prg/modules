@@ -38,7 +38,7 @@ function jcSlider ( name, container ) {
 
 	this.appName      = name;
 	this.appContainer = container;
-	this.appVersion   = "v0.1.0";
+	this.appVersion   = "v0.1.1";
 	this.callOnChange = this.info;
 	this.showVolume   = this.info;
 	
@@ -92,6 +92,8 @@ function jcSlider ( name, container ) {
 
 			}
 		else {
+			document.getElementById(this.appName).setAttribute("min", min);
+			document.getElementById(this.appName).setAttribute("max", max);
 			}
 
 		this.slider_value.innerHTML	= this.slider.value;
