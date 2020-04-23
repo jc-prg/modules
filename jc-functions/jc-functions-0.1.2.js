@@ -138,7 +138,7 @@ function elementHidden(id,debug="") {
 
 function elementVisible(id) {
   if (document.getElementById(id))      { document.getElementById(id).style.display = "block"; }
-  else                                  { console.debug("Element not found: "+id)+" (elementVisible)"; }
+  else                                  { console.debug("Element not found: "+id+" (elementVisible)"); }
   }
 
 function changeVisibility(id,show="") {
