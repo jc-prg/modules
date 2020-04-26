@@ -108,6 +108,7 @@ function jcMsg(app_name,app_link="") {
 		this.text.style.height             = this.message_height_txt(height)+"px";
 		this.text.style.maxHeight          = this.message_height_txt(height)+"px";
 		this.text.innerHTML                = "<center><b><br/>" + text + "</b></center>";
+		
 		this.buttons.style.top             = "10px";
 		var buttons			   = "<center><button class='jcMsgButton' onClick='" + this.appLink +".hide();'>dont wait</button>";
 		if (callback != "") { buttons     += " <button class='jcMsgButton' onClick='" + callback +"'>reload</button></center>"; }
@@ -121,7 +122,7 @@ function jcMsg(app_name,app_link="") {
 		var height = 140;
 	
 		this.body.style.width		   = this.message_width(this.default_width)+"px";
-		this.body.style.height		   = this.message_height(height);
+		this.body.style.height		   = this.message_height(height) + "px";
 		this.body.style.top		   = this.message_top(height) + "px";
 
 		this.text.style.top                = "10px";
@@ -132,7 +133,8 @@ function jcMsg(app_name,app_link="") {
 		this.text.innerHTML                = "<center><br/>" + msg + "</center>";
 		if (callback != "")                { callback_cmd = callback + "();"; }
 		else                               { callback_cmd = ""; }
-		this.buttons.style.top             = "20px";
+		
+		this.buttons.style.top             = "10px";
 		this.buttons.innerHTML             =  "<center><button class='jcMsgButton' onClick='" + this.appLink +".hide();"+callback_cmd+"'>OK</button> ";
 		this.show();
 		}
