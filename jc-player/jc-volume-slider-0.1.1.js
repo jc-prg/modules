@@ -68,7 +68,8 @@ function jcSlider ( name, container ) {
 		name = this.appName;
 
 		if (this.container == undefined) {
-			this.sliderHTML   		=  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"visibility:hidden\">";
+			this.sliderHTML   		=  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"display:none\">";
+//			this.sliderHTML   		=  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"visibility:hidden\">";
   			this.sliderHTML   		+= "<input type=\"range\" min=\""+min+"\" max=\""+max+"\" value=\"50\" class=\"slider\" id=\""+name+"\">";
   			this.sliderHTML   		+= "<br/><div id=\""+name+"_value\" class=\"slidervalue\">xx</div>";
   			this.sliderHTML   		+= "<div  id=\""+name+"_label\" class=\"sliderlabel\">"+label+"</div>";
@@ -157,8 +158,10 @@ function jcSlider ( name, container ) {
 		if (this.posLeft   != false)	{ this.container.style.left   = this.posLeft; }		else { this.container.style.left = ""; }
 		if (this.posRight  != false)	{ this.container.style.right  = this.posRight; } 	else { this.container.style.right = ""; }
 
-		if (this.slider_cont.style.visibility == "hidden") 	{ this.slider_cont.style.visibility = "visible"; }
-		else							{ this.slider_cont.style.visibility = "hidden"; }
+//		if (this.slider_cont.style.visibility == "hidden") 	{ this.slider_cont.style.visibility = "visible"; }
+//		else							{ this.slider_cont.style.visibility = "hidden"; }
+		if (this.slider_cont.style.display == "none") 	{ this.slider_cont.style.display = "block"; }
+		else						{ this.slider_cont.style.display = "none"; }
 		}
 	
 	this.info		= function() {
@@ -169,3 +172,19 @@ function jcSlider ( name, container ) {
 
 //-----------------------------------------
 // EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
