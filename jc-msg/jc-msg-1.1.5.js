@@ -38,7 +38,9 @@ function jcMsg(app_name,app_link="") {
 	//-----------------------------
 
 	this.message_top	= function(height) {
-		return ((window.innerHeight - height) / 2) - 10;
+	        var top = ((window.innerHeight - height) / 2) - 10; 
+	        if (top < 10) { top = 10; }
+		return top;
 		}
 		
 	this.message_width	= function(width) {
