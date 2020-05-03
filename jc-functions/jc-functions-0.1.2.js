@@ -190,6 +190,23 @@ function sortDict(dict,sort_key) {
 	
 //--------------------------------------
 
+function sortDictByValue(dict) {
+	var order      = [];
+	var sort_order = [];
+	
+	for (key in dict) { sort_order.push(dict[key] + "###" + key); }
+	sort_order.sort();
+	for (var i=0;i<sort_order.length;i++) { 
+		var key = sort_order[i].split("###");
+		order.push(key[1]);
+		}
+	return order;
+	}
+
+
+
+//--------------------------------------
+
 function sortNumber(a,b) {
         return a - b;
     }
