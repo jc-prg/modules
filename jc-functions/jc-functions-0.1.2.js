@@ -18,6 +18,7 @@ function elementVisible(id) {
 function changeVisibility(id) {
 function writeKeyBoard () {
 function sortDict(dict,sort_key) {
+function sortDictByValue(dict) {
 function sortNumber(a,b) {
 function jcTooltip(name) {
 	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="") {
@@ -49,11 +50,18 @@ function onmousedown_left_right(event,command_left,command_right) {
 // convert seconds to time format
 //--------------------------------
 
-function convert_second2time(seconds) {
-	var min = Math.floor(seconds/60);
-	var sec = seconds - min*60;
-	if (sec < 10) { sec = "0"+sec; }
-	return (min+":"+sec);
+function convert_second2time(seconds_input) {
+
+	var seconds = seconds_input;
+	var hours   = Math.floor(seconds/60/60);	seconds = seconds - hours*60*60;
+	var minutes = Math.floor(seconds/60);		seconds = seconds - minutes*60;
+	var sec     = seconds;
+	
+	if (sec < 10)			{ sec     = "0"+sec; }
+	if (minutes < 10 && hours > 0)	{ minutes = "0"+minutes; }
+	
+	if (hours > 0)			{ return (hours+":"+minutes+":"+sec); }
+	else				{ return (minutes+":"+sec); }
 	}
 
 //--------------------------------
