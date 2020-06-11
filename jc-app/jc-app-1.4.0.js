@@ -348,18 +348,19 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.setAutoupdate = function(callback="",interval="") {
 		var app = this;
 		
-		if (interval == "")	{ interval = app.appUpdate; }
-		if (jcAppTest)		{ console.log( this.appName + ": Set Autoupdate: " + interval ); }
-
+		if (interval == "")		{ interval = this.appUpdate; }
 		if (app.appIntervalMain != -1) { clearInterval(app.appIntervalMain); app.appIntervalMain = -1; }
 		if (app.appIntervalCall != -1) { clearInterval(app.appIntervalCall); app.appIntervalCall = -1; }
 			
 		if (interval > 0) {
-			console.log("set reload intervall to "+interval+"s ...");
+			console.log("Set reload intervall to "+interval+"s ...");
 			app.appIntervalMain = setInterval(function(){app.load("setAutoupate")}, interval * 1000);
 			if (callback!="") {
 				app.appIntervalCall = setInterval(function(){callback()}, interval * 1000);
 				}
+			}
+		else {
+			console.log("Cleared reload intervall ...");
 			}
 		}
 
