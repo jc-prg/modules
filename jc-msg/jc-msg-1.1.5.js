@@ -19,7 +19,7 @@ function jcMsg(app_name,app_link="") {
 		document.getElementById(this.appName).innerHTML +=
 		'<div id="' + app_name + '_cover"   class="jcMsgCover">' +
 		'<div id="' + app_name + '_body"    class="jcMsgBody">' +
-		'<div id="' + app_name + '_text"    class="jcMsgText" style="border:1px solid #eeeeee;"></div>' +
+		'<div id="' + app_name + '_text"    class="jcMsgText" ></div>' + //style="border:1px solid #eeeeee;"></div>' +
 		'<div id="' + app_name + '_buttons" class="jcMsgButtons"></div></div></div>';
 		}
 	else {	console.log( "Error " + this.appName + " (jcMsg " + this.appVersion + "): no element name like app");
