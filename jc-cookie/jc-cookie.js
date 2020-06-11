@@ -8,8 +8,9 @@
 function jcCookie(app,expire=1) {
 
 	this.appName 		= app;
-	this.appVersion		= "v0.1";
-	this.cookieExpire	= expire*24*60*60*1000; // default = 1 day
+	this.appVersion	= "v0.1.1";
+	this.cookieExpire	= expire*24*60*60*1000;	// default = 1 day
+	this.sameSite          = "Strict";			// possible values: Strict, Lax, None (https://developer.mozilla.org/de/docs/Web/HTTP/Headers/Set-Cookie/SameSite)
 
 	// set cookie for name with value and expiry time
 	this.set = function(name,value) {
@@ -19,7 +20,7 @@ function jcCookie(app,expire=1) {
         		date.setTime(date.getTime() + this.cookieExpire);
 		        expires = "; expires=" + date.toUTCString();
 			}
-		document.cookie = this.appName + "_" + name + "=" + (value || "")  + expires + "; path=/";
+		document.cookie = this.appName + "_" + name + "=" + (value || "")  + expires + "; SameSite="+this.sameSite+"; path=/;";
 		}
 
 	// get value from cookie for name
