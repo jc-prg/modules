@@ -70,12 +70,12 @@ function convert_second2time(seconds_input) {
 
 function setValueById(id, text) {
   	if (document.getElementById(id))      { document.getElementById(id).value = text; }
-  	else                                  { console.debug("Element not found: "+id+" (setTextById)"); }
+  	else                                  { console.debug("Element not found: "+id+" (setValueById)"); }
   	}
 
 function getValueById(id, text) {
   	if (document.getElementById(id))      { return document.getElementById(id).value; }
-  	else                                  { console.debug("Element not found: "+id+" (getTextById)"); }
+  	else                                  { console.debug("Element not found: "+id+" (getValueById)"); }
   	}
 
 //--------------------------------
@@ -93,10 +93,8 @@ function getTextById(id, text) {
   	}
   
 function addTextById(id, text="") {
-	if (document.getElementById(id)) {
-		document.getElementById(id).innerHTML += text;
-		}
-	else { console.error("setTextById: ERROR Element not found - "+id); }
+	if (document.getElementById(id))	{ document.getElementById(id).innerHTML += text; }
+	else 					{ console.error("Element not found: "+id+" (addTextById)"); }
 	}
 
 function setOnclickById(id, script="") {
