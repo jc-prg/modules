@@ -207,6 +207,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	// send cmd to rest API
 	this.requestAPI_execute = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
 
+		var callback;
 		var app  	 	= this;
 		var start_time	 	= new Date();
 		var transfer_cmd 	= "";

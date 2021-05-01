@@ -170,6 +170,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 		//console.log("Test: "+method+" - "+cmd[0]);
 
+		var callback;
 		var app  	 	= this;
 		var start_time	 	= new Date();
 		var transfer_cmd 	= "";
