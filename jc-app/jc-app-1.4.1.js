@@ -34,7 +34,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 	this.appData         = {};		// data, got by load
 	this.appSendData     = {};		// data, got by last used command
-	this.appHideError    = false;	// if error log should not be shown automaticly, set true
+	this.appHideError    = false;		// if error log should not be shown automaticly, set true
 	
 	this.appUpdate       = -1;
 	this.appIntervalMain = -1;
@@ -45,6 +45,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.loadWhenSend    = false;
 	this.async           = true;
 	this.lastConnect     = 0;
+	this.maxTimeout      = 15000;  	// set to -1 for no timeout
 	this.timeout         = -1;
 	
 	this.queue           = [];
@@ -64,7 +65,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	console.log("Start " + this.appName + " (jcApp " + this.appVersion + ")");
 
 	// set central parameteres
-	this.init      = function( data_container, error_container, update_interval, printFunction, printRequest ) {
+	this.init      	= function( data_container, error_container, update_interval, printFunction, printRequest ) {
 
 		if (data_container!="") {
 			this.appTarget     = data_container; }			// html element for app content (if required)
@@ -103,7 +104,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		}
 
 	// write error log
-	this.errorLog   = function( new_msg, start_time ) {
+	this.errorLog   	= function( new_msg, start_time ) {
 		var msg   = document.getElementById(this.appError).innerHTML;
 		var stamp = new Date();
 		var time  = stamp.toLocaleTimeString();
@@ -147,30 +148,34 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		}
 
 	// read existing log
-        this.errorGetLog = function () {
+        this.errorGetLog	= function () {
 		log = document.getElementById(this.appError).innerHTML;
 		return log.split("<br/>");
 		}
 
 	// show / hide error log
-	this.errorLogShow = function() {
+	this.errorLogShow	= function() {
 		id = this.appError;
 		if (this.IsHidden(id)) { this.elementVisible(id); }
 		else                   { this.elementHidden(id); }
 		}
 
 	// get time
-	this.time       = function() {
+	this.time       	= function() {
 		var old = this.lastConnect;
-		var d = new Date();
+		var d   = new Date();
 		this.lastConnect = d.getTime();
 
 		//console.log(old+"/"+this.lastConnect+"/"+(this.lastConnect-old));
 		}
-
+		
+	// set timeout
+	this.setTimeout	= function(timeout=-1) {
+		this.timeout = timeout;
+		}
 
 	// load data from REST API
-	this.load	= function(source="") {
+	this.load		= function(source="") {
 		var app  = this;
 	        app.setStatus("waiting");
 		app.requestAPI("GET",[app.appList],"", app.printFunction,"",source);
@@ -182,15 +187,15 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	//-----------------------------
 	
 	// start queue
-	this.requestAPI_init = function() {
+	this.requestAPI_init 	= function() {
 		this.use_queue = true;
-		if (this.timeout == -1) { this.timeout = 10000; }
+		if (this.timeout == -1 && this.maxTimeout != -1) { this.timeout = this.maxTimeout; }
 		jcAppInterval  = this;
 		setInterval(function(){ jcAppInterval.requestAPI_queue(); }, this.queue_interval);
 		}
 
 	// add to queue
-	this.requestAPI = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
+	this.requestAPI 	= function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
 	        this.printRequest("START", cmd, source);
 		if (this.use_queue)	{ this.queue.push( [ method, cmd, body_data, callback_array, wait_till_executed, source ] ); }
 		else			{ this.requestAPI_execute( method, cmd, body_data, callback_array, wait_till_executed, source ); }
@@ -306,10 +311,11 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		// set timeout if defined
 		if (this.timeout > -1 && asyncronous) {
 			xhttp.ontimeout = function () { 
-				console.error("The request for " + requestURL + " timed out.");
+				console.error("The request for " + requestURL + " timed out: " + xhttp.timeout + "ms / " + cmd + " / " + source );
 				app.printRequest("TIMEOUT", cmd, source);
 				};
-			xhttp.timeout = this.timeout;
+			if (source == "setAutoupdate" && this.appUpdate < this.timeout)	{ xhttp.timeout = this.appUpdate - 900; }
+			else									{ xhttp.timeout = this.timeout; }
 			}
 
 		//if (body_data)	{ xhttp.send(body_data); }
@@ -364,7 +370,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			
 		if (interval > 0) {
 			console.log("Set reload intervall to "+interval+"s ...");
-			app.appIntervalMain = setInterval(function(){app.load("setAutoupate")}, interval * 1000);
+			app.appIntervalMain = setInterval(function(){app.load("setAutoupdate")}, interval * 1000);
 			if (callback!="") {
 				app.appIntervalCall = setInterval(function(){callback()}, interval * 1000);
 				}
