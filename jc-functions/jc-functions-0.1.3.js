@@ -231,11 +231,19 @@ function jcTooltip(name) {
 	this.style_offset  = ["","",""];
 	this.all_elements  = [];
 	
-	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="") {
+	this.settings = function (mode="onmouseover", width="auto", height="auto", offset_height=0, offset_width=0, triangle_position="right") {
 	
-		if (offset != "") { this.style_offset  = [ "bottom:auto;top:"+offset+"px;", "bottom:auto;top:"+(offset-9)+"px;","bottom:auto;top:"+(offset-10)+"px;" ]; }
-		
-		this.style_tooltip = "style=\"height:"+height+";width:"+width+";"+this.style_offset[0]+"\"";
+		triangle_position = "right";
+			
+		if (triangle_position == "left" || triangle_position == "upper-left") {
+			right = offset_width + width - 30;
+			}
+		else if (triangle_position == "right" || triangle_position == "upper-right") {
+			right = offset_width + 20;
+			}
+			
+		this.style_offset  = [ "bottom:unset;top:"+offset_height+"px;right:"+offset_width+"px;left:unset;", "bottom:auto;top:"+(offset_height-9)+"px;right:"+right+"px;left:unset;","bottom:unset;top:"+(offset_height-10)+"px;right:"+right+"px;left:unset;" ]; 
+		this.style_tooltip = "style=\"height:"+height+"px;width:"+width+"px;"+this.style_offset[0]+"\"";
 		this.react_on      = mode;
 		} 
 	
@@ -300,7 +308,7 @@ function jcTooltip(name) {
 //--------------------------------
 
 function check_if_element_or_value(name_value,lowercase=false) {
-        if (name_value == "")                                                                   { console.error("check_if_element_or_value: no value"); return; }
+        if (name_value == "")										{ console.error("check_if_element_or_value: no value"); return; }
 	if (document.getElementById(name_value) && document.getElementById(name_value).value) 	{ 
 		if (lowercase)	{ return document.getElementById(name_value).value.toLowerCase(); }
 		else 		{ return document.getElementById(name_value).value; }
