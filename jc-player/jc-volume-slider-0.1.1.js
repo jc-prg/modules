@@ -79,10 +79,15 @@ function jcSlider ( name, container ) {
 			this.container.innerHTML	= this.sliderHTML;
 
 			this.slider       		= document.getElementById(name);
-			this.slider_value 		= document.getElementById(name+"_value");
-			this.slider_cont  		= document.getElementById(name+"_container");
-			this.slider_label 		= document.getElementById(name+"_label");
-			this.slider_active		= false;
+			if (this.slider) {
+				this.slider_value 		= document.getElementById(name+"_value");
+				this.slider_cont  		= document.getElementById(name+"_container");
+				this.slider_label 		= document.getElementById(name+"_label");
+				this.slider_active		= false;
+				}
+			else {
+				console.error(this.appName+": No <DIV ID='"+name+"'> found!");
+				}
 
 			this.container.style.position 	= "fixed";
 			this.container.style.zIndex     = 98;
@@ -141,11 +146,16 @@ function jcSlider ( name, container ) {
 
 	// set value from outside (update data)
 	this.set_value		= function( value ) {
-		if (this.slider_active == false) {
-			this.slider.value		= value;
-			this.slider_value.innerHTML	= value;
+		if (this.slider) {
+			if (this.slider_active == false) {
+				this.slider.value		= value;
+				this.slider_value.innerHTML	= value;
+				}
+			console.log("Set Volume: " + this.slider.value);  
 			}
-		console.log("Set Volume: " + this.slider.value);  
+		else {
+			console.error(this.appName+": No slider created yet!");
+			}
 		}
 		
 	// show or hide slider
