@@ -1,16 +1,34 @@
-//--------------------------
+//-------------------------------------------------------
 // UPLOAD SCRIPT
-//--------------------------
-// to integrate add the following to HTML:
-//
-//	<script src="upload/upload.js"></script>
-//      <div id="uploadform"></div>
-//      <script>
-//		defaultUpload("uploadform");
-//		enableUpload();
-//	</script>
-//
-//--------------------------
+//-------------------------------------------------------
+/* IMPLEMENTATION: to integrate add the following to HTML:
+
+	<script src="upload/upload.js"></script>
+      <div id="uploadform"></div>
+      <script>
+		defaultUpload("uploadform");
+		enableUpload();
+	</script>
+*/
+//-------------------------------------------------------
+/* INDEX:
+function defaultForm(dir="",type="")
+function defaultUpload(id)
+function enableUpload()
+function allowDrop(ev)
+function drag(ev)
+function drop(ev)
+function dateiauswahl(evt)
+function dateiauswahl2(files)
+			reader.onload = (function (theFile)
+				return function (e)
+function fileUpload(callback,param="")
+    client.onerror = function(e)
+    client.onload = function(e)
+    client.upload.onprogress = function(e)
+    client.onabort = function(e)
+*/
+//-------------------------------------------------------
 
 var loaded        = false;
 var UploadDateien = [];

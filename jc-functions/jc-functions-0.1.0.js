@@ -3,6 +3,23 @@
 //-------------------------
 // (c) Christoph Kloth
 //-------------------------
+/* INDEX:
+function onmousedown_left_right(event,command_left,command_right)
+function setTextById(id, text)
+function getTextById(id, text)
+function isHidden(id)
+function elementHidden(id,debug="")
+function elementVisible(id)
+function changeVisibility(id)
+function jcTooltip(name)
+	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="")
+	this.create   = function (parent_element, tooltip_text, name, left="")
+	this.show = function (name)
+	this.hide = function (name)
+	this.toggle = function (name)
+	this.toggleAll = function (name)
+*/
+//--------------------------------------
 
 
 // call different commands for left and right mousebutton

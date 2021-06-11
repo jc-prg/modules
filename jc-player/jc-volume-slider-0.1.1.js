@@ -5,21 +5,20 @@
 // requires jc-volume-slider-<version>.css
 //-----------------------------------------
 /* INDEX
-
-function slider ( name, container )
+function jcSlider ( name, container )
 	this.setOnChange	= function(callOnChange="")
 	this.setShowVolume	= function(showVolume="")
-	this.setPosition        = function(top,left,right)
-	this.init		= function(min, max, label)
-		this.slider.oninput		= function()
+	this.init		= function( min, max, label )
+		this.slider.oninput		= function( )
 		this.slider.onmousedown		= function()
 		this.slider.onmouseup		= function()
 		this.slider.ontouchstart	= function()
 		this.slider.ontouchend		= function()
 	this.setPosition	= function(top=false,bottom=false,left=false,right=false)
-	this.set_value		= function(value)
+	this.set_value		= function( value )
 	this.show_hide		= function()
 	this.info		= function()
+		alert("Please define a function to be called on change.")
 */
 //-----------------------------------------
 /* SAMPLE IMPLEMENTATION

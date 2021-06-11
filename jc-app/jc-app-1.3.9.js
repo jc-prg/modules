@@ -16,6 +16,32 @@
 //	}
 //
 //------------------------------------------------------
+/* INDEX:
+function jcApp( name, url, list_cmd, send_cmd )
+	this.init      = function( data_container, error_container, update_interval, printFunction )
+	this.errorLog   = function( new_msg, start_time )
+        this.errorGetLog = function ()
+	this.errorLogShow = function()
+	this.time       = function()
+	this.load	= function(source="")
+	this.requestAPI_init = function()
+	this.requestAPI = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="")
+	this.requestAPI_queue = function()
+	this.requestAPI_execute = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="")
+		xhttp.onreadystatechange = function ()
+			//xhttp.onloadend = function ()
+			xhttp.ontimeout = function ()
+	this.sendCmd     = function( cmd, callback, wait="" )
+	this.sendCmdSync = function( cmd, callback )
+	this.sendCmdPwd     = function( cmd, pwd, callback )
+	this.setAutoupdate = function(callback="")
+	this.setStatus = function(cmd)
+	this.setTextById = function (id, text)
+	this.isHidden = function (id)
+	this.elementHidden = function (id)
+	this.elementVisible = function (id)
+*/
+//------------------------------------------------------
 
 
 var jcAppTest    = true;

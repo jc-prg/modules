@@ -4,26 +4,27 @@
 // (c) Christoph Kloth
 //-------------------------
 /* INDEX:
-function onmousedown_left_right(event,command_left,command_right) {
-function convert_second2time(seconds) {
-function setTextById(id, text) {
-function getTextById(id, text) {
-function addTextById(id, text="") {
-function setOnclickById(id, script="") {
-function isHidden(id) {
-function elementHidden(id,debug="") {
-function elementVisible(id) {
-function changeVisibility(id) {
-function writeKeyBoard () {
-function sortNumber(a,b) {
-function jcTooltip(name) {
-	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="") {
-	this.create   = function (parent_element, tooltip_text, name, left="") {
-	this.show = function (name) {
-	this.hide = function (name) {
-	this.toggle = function (name) {
-	this.toggleAll = function (name) {
-function check_if_element_or_value(name_value) {
+function onmousedown_left_right(event,command_left,command_right)
+function convert_second2time(seconds)
+function setTextById(id, text)
+function getTextById(id, text)
+function addTextById(id, text="")
+function setOnclickById(id, script="")
+		document.getElementById(id)
+function isHidden(id)
+function elementHidden(id,debug="")
+function elementVisible(id)
+function changeVisibility(id,show="")
+function writeKeyBoard ()
+function sortNumber(a,b)
+function jcTooltip(name)
+	this.settings = function (mode="onmouseover", width="auto", height="auto", offset="")
+	this.create   = function (parent_element, tooltip_text, name, left="")
+	this.show = function (name)
+	this.hide = function (name)
+	this.toggle = function (name)
+	this.toggleAll = function (name)
+function check_if_element_or_value(name_value)
 */
 //-------------------------
 

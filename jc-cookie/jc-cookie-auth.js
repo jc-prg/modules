@@ -13,6 +13,19 @@
 // IDEA - load css-files dynamically via js-file
 // IDEA - check if only one app version is loaded
 //---------------------------------------------------------
+/* INDEX:
+function jcAuth(app_name)
+	this.init = function()
+	this.status = function()
+	this.editPwd = function()
+	this.setPwd = function(from_edit_field=false)
+	this.getPwd = function()
+	this.showPwd = function()
+	this.showCookie = function()
+	this.showPwdInput = function()
+	this.setTextById = function(id,text)
+*/
+//---------------------------------------------------------
 
 
 

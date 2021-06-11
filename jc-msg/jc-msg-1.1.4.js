@@ -1,7 +1,22 @@
-
-// jc://design/
+// jc://msg/
 //-------------------------------------------------------
 // write messages (instead of Alert, Confirmed, Waiting ...)
+//-------------------------------------------------------
+/* INDEX:
+function jcMsg(app_name,app_link="")
+	this.wait_small = function (text="", callback="", callback_label="")
+	this.wait = function (text="", callback="")
+	this.alert = function (msg="",callback="")
+	this.alertReturn = function (data, callback="")
+	this.confirm = function (msg, cmd="", height="120", close=true)
+		document.onkeyup = function(event)
+	this.dialog = function()
+	this.show = function (param="")
+	this.hide = function (param="")
+function ifconfirmed(question,funct,param,callback="")
+	// callback function if defined)
+*/
+//-------------------------------------------------------
 
 function jcMsg(app_name,app_link="") {
 

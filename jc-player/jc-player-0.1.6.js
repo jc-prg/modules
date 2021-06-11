@@ -3,29 +3,30 @@
 //--------------------------------------------------
 /* INDEX
 function jcPlayer(name,element,music_url="", cover_url="", app_url="")
-	this.init  	= function()
-	this.button 	= function(img)
-	this.scroll_to 	= function(element)
-	this.load  	= function(data)
-	this.update 	= function()
-	this.musicStatus= function()
-
- 	this.audio.onended 	= function()
-	
+	this.init  = function(type="")
+	this.button = function(img)
+	this.scroll_to = function(element)
+	this.load  = function(data)
+	this.update = function()
+  		this.audio.onended = function()
+	this.musicStatus = function()
 	this.play  = function()
 	this.pause = function()
 	this.stop  = function()
 	this.next  = function()
 	this.last  = function()
-	
 	this.volumeSet  = function(vol)
 	this.volumeUp   = function()
 	this.volumeDown = function()
 	this.volumeMute = function()
-	
-	this.sort_list 	= function(tracks)
+	this.sort_list = function(tracks)
 	this.sortNumber = function(a,b)
-	this.setTextById= function(id,text)
+	this.setTextById = function(id,text)
+	this.printInfoCover = function()
+	this.printInfoShort = function()
+	this.printButtons = function()
+	this.printButtonsStream = function()
+	this.printProgress = function()
 */
 //--------------------------------------------------
 /* IMPLEMENTATION
