@@ -22,7 +22,7 @@ function dateiauswahl(evt)
 function dateiauswahl2(files)
 			reader.onload = (function (theFile)
 				return function (e)
-function fileUpload(callback,param="")
+function fileUpload(callback, param="")
     client.onerror = function(e)
     client.onload = function(e)
     client.upload.onprogress = function(e)
@@ -32,6 +32,7 @@ function fileUpload(callback,param="")
 
 var loaded        = false;
 var UploadDateien = [];
+var UploadScript  = "upload.php";
 
 
 //--------------------------
@@ -41,30 +42,30 @@ var UploadDateien = [];
 function defaultForm(dir="",type="") {
 
 	var default_form = '<div id="uploadzone" class="droparea" ondrop="drop(event)" ondragover="allowDrop(event)"> \
-        <small>Datei hierher ziehen:</small> \
-        <output id="list"></output> \
-</div> \
-<div class="upload"> \
+        	<small>Datei hierher ziehen:</small> \
+        	<output id="list"></output> \
+	</div> \
+	<div class="upload"> \
         <input type="file" id="files" name="files[]" /><br/>';
 
 	if (dir != "") {
-		default_form += '<input id="upload_dir" value="' + dir + '" />';
+		default_form += '<input id="upload_dir"  value="' + dir + '" />';
 		default_form += '<input id="upload_type" value="' + type + '" />';
 		}
 
 	default_form += '<hr style="background:gray;height:1px;border:0px;margin:5px;" /> \
-        <div class="uploadCol"> \
+	<div class="uploadCol"> \
                 <button id="uploadbutton" onclick="fileUpload();">upload</button><br/> \
                 <progress id="progress" class="progressbar"></progress> <span id="prozent"></span> \
-        </div> \
-        <div class="uploadCol"> \
+	</div> \
+	<div class="uploadCol"> \
             <div id="fileName">Datei ausw&auml;hlen...</div> \
             <div id="fileSize"></div> \
             <div id="fileType"></div> \
 	    <input id="fName" style="display:none;" /> \
-        </div> \
-</div> \
-';
+	</div> \
+	</div> \
+	';
 	return default_form;
 	}
 
@@ -165,9 +166,7 @@ function dateiauswahl2(files) {
 
 var client = null;
 
-function fileUpload(callback,param="") {
-
-	//console.log("callback: "+callback+"/"+param);
+function fileUpload(callback, param="") {
 
 	//Wieder unser File Objekt
 
@@ -179,10 +178,6 @@ function fileUpload(callback,param="") {
 		callback(param);
 		return;
 		}
-//	if (files) {
-//		file = files[0]; 
-//		console.log("2:"+file["name"]);
-//		}
 
 	//FormData Objekt erzeugen
 	var formData = new FormData();
@@ -231,7 +226,7 @@ function fileUpload(callback,param="") {
 	console.log("Upload ABORT: "+client.status);
     	};
 
-	client.open("POST", "upload.php");
+	client.open("POST", UploadScript);
 	client.send(formData);
 
 }
