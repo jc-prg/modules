@@ -24,7 +24,7 @@ function jcApp( name, url, list_cmd, send_cmd )
         this.errorGetLog	= function ()
 	this.errorLogShow	= function()
 	this.time       	= function()
-	this.load		= function(source="")
+	this.load		= function(source="",callback="")
 	this.requestAPI_init 	= function()
 	this.requestAPI 	= function( method, cmd, body_data, callback_array="", wait_till_executed="", source="")
 	this.requestAPI_queue = function()
@@ -36,6 +36,7 @@ function jcApp( name, url, list_cmd, send_cmd )
 	this.sendCmdSync = function( cmd, callback )
 	this.sendCmdPwd     = function( cmd, pwd, callback )
 	this.setAutoupdate = function(callback="",interval="")
+	this.setAutoupdateLoading = function(on=true)
 	this.setStatus = function(cmd)
 	this.setTextById = function (id, text)
 	this.isHidden = function (id)
@@ -202,10 +203,11 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		}
 
 	// load data from REST API
-	this.load		= function(source="") {
+	this.load		= function(source="",callback="") {
 		var app  = this;
 	        app.setStatus("waiting");
-		app.requestAPI("GET",[app.appList],"", app.printFunction,"",source);
+	        if (callback == "") { callback = app.printFunction; }
+		app.requestAPI("GET",[app.appList],"", callback,"",source);
 		return;
 		}
 		
@@ -391,19 +393,29 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	// set auto update
 	this.setAutoupdate = function(callback="",interval="") {
 		var app = this;
-		
 		if (interval == "")		{ interval = this.appUpdate; }
 		if (app.appIntervalMain != -1) { clearInterval(app.appIntervalMain); app.appIntervalMain = -1; }
-			
 		if (interval > 0) {
 			console.log("Set reload intervall to "+interval+"s ...");
-			app.appIntervalMain = setInterval(function(){app.load("setAutoupdate")}, interval * 1000);
-			if (callback!="") {
-				app.appIntervalCall = setInterval(function(){callback()}, interval * 1000);
-				}
+			app.appIntervalMain     = setInterval(function(){app.load("setAutoupdate",callback)}, interval * 1000);
 			}
 		else {
+			clearInterval(app.appIntervalMain);
 			console.log("Cleared reload intervall ...");
+			}
+		}
+		
+	// set auto update - additional interval when loading data
+	this.setAutoupdateLoading = function(on=true) {
+		var app = this;
+		if (on) {
+			console.log("Add temporary reload interval to 1s for loading process ...");
+			app.appIntervalTemp = setInterval(function(){app.load("setAutoupdateLoding")}, 1000);
+			}
+		else if (app.appIntervalTemp) {
+			console.log("Clear temporary reload interval for loading process ("+app.appIntervalTemp+") ...");
+			clearInterval(app.appIntervalTemp);
+			app.appIntervalTemp = undefined;
 			}
 		}
 
