@@ -116,7 +116,7 @@ function jcSlider ( name, container ) {
 		
 		// define slider events
 		this.slider.oninput		= function( ) {
-			console.log("Set Volume: " + this.value);  
+			console.debug("Set Volume: " + this.value);  
 			this.slider_value.innerHTML = this.value; 	
 			this.showVolume( this.value );
 			}
@@ -150,7 +150,7 @@ function jcSlider ( name, container ) {
 				this.slider.value		= value;
 				this.slider_value.innerHTML	= value;
 				}
-			console.log("Set Volume: " + this.slider.value);  
+			console.debug("Set Volume: " + this.slider.value);  
 			}
 		else {
 			console.error(this.appName+": No slider created yet!");
