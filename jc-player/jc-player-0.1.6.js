@@ -73,6 +73,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 	this.appVersion   = "v0.1.6";
 	this.appScrollTo  = "";
 	this.appDir       = app_url + "jc-player/";
+	this.imgDir       = this.appDir + "icon/";
 
 	// init vars
 	this.activeData   = {};
@@ -128,7 +129,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		
 	// image data
 	this.button = function(img) {
-		return "<img src=\""+this.appDir+"icon/"+img+".png\" class=\"jcPlayer_button_image\">";
+		return "<img src=\""+this.imgDir+img+".png\" class=\"jcPlayer_button_image\">";
 		}
 
 	// scroll to album details
