@@ -67,6 +67,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.appUpdate       = -1;
 	this.appIntervalMain = -1;
 	this.appIntervalCall = -1;
+	this.appIntervalTemp = -1;
 
 	this.errorList       = [];
 	this.errorCount      = 50;
@@ -406,16 +407,16 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		}
 		
 	// set auto update - additional interval when loading data
-	this.setAutoupdateLoading = function(on=true) {
+	this.setAutoupdateLoading = function(on=true,info="") {
 		var app = this;
-		if (on) {
-			console.log("Add temporary reload interval to 1s for loading process ...");
+		if (on && app.appIntervalTemp < 0) {
 			app.appIntervalTemp = setInterval(function(){app.load("setAutoupdateLoding")}, 1000);
+			console.log("Add temporary reload interval to 1s for loading process ("+on+"/"+app.appIntervalTemp+"/"+info+") ...");
 			}
-		else if (app.appIntervalTemp) {
-			console.log("Clear temporary reload interval for loading process ("+app.appIntervalTemp+") ...");
+		else if (on == false && app.appIntervalTemp > 0) {
+			console.log("Clear temporary reload interval for loading process ("+on+"/"+app.appIntervalTemp+"/"+info+") ...");
 			clearInterval(app.appIntervalTemp);
-			app.appIntervalTemp = undefined;
+			app.appIntervalTemp = -1;
 			}
 		}
 
