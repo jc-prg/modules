@@ -51,12 +51,16 @@ data = {
 		"<uuid-1>" : {
 			"title"  : "...",
 			"artist" : "...",
-			"file"   : "...",
+			"file"   : "...",			// if local file
+			"url"    : "...",			// if web-stream
+			"track_num" : [ <no>, <amount> ],
 			},
 		"<uuid-2>" : {
 			"title" : "...",
 			"artist" : "...",
-			"file"  : "...",
+			"file"  : "...",			// if local file
+			"url"    : "...",			// if web-stream
+			"track_num" : [ <no>, <amount> ],
 			},
 		]
 	}
@@ -142,14 +146,14 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 	this.load  = function(data) {
 		// set vars
 		this.activeData       = data;
-		this.activeSize       = data["album"]["tracks"].length;
 		this.activeAlbum      = data["album"];
 		this.activeTracks     = data["tracks"];
 		this.appScrollTo      = data["scrollto"];
 		
-		if      (this.activeData["type"] == "album") 	{ this.activeTracklist  = this.sort_list(data["tracks"]); }
-		else if (this.activeData["type"] == "list")	{ this.activeTracklist  = this.activeAlbum["tracks"]; }
-		else if (this.activeData["type"] == "stream")	{ 
+		if      (this.activeData["type"] == "album") 		{ this.activeTracklist  = this.sort_list(data["tracks"]); }
+		else if (this.activeData["type"] == "podcast") 	{ this.activeTracklist  = this.sort_list(data["tracks"]); }
+		else if (this.activeData["type"] == "list")		{ this.activeTracklist  = this.activeAlbum["tracks"]; }
+		else if (this.activeData["type"] == "stream")		{ 
 		
 			var track = {};
 			track["titel"]     = this.activeAlbum["title"];
@@ -159,13 +163,16 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 			
 			this.activeTrack         = 0;
 			this.activeTracks["url"] = track;
-			this.activeTracklist	 = [ "url" ];
-			this.activeSize       	 = 1;
+			this.activeTracklist	  = [ "url" ];
+			this.activeSize       	  = 1;
 			
 			this.init("stream");
 			}
 		else						{ this.activeTracklist  = this.activeAlbum["tracks"]; }
+		
+		console.log(this.activeTracklist);
 
+		this.activeSize             = this.activeTracklist.length;
 		this.activeCtrl["id_album"] = this.activeAlbum["uuid"];
 		this.activeCtrl["id_track"] = this.activeTracklist[0]["uuid"];
 
@@ -196,7 +203,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		
 		// define audio file or url (if stream)
 		if (active_info["url"]) { this.audio.src = active_info["url"]; }
-		else			{ this.audio.src = this.url + active_info["file"]; }
+		else			 { this.audio.src = this.url + active_info["file"]; }
 				
 		// load url
   		this.audio.style.display 	= "none"; 	//added to fix ios issue
@@ -218,9 +225,13 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		if (this.activeData["type"]  == "list")    { track_album = "<br/><i>" + active_info["album"] + "</i>"; } else { track_album = ""; }
 
 		if (this.activeData["type"]  != "stream")  {
-			// write data
 			this.setTextById("jcPlayer_"+this.appName+"_title",	"<b>" + this.activeAlbum["title"] + "</b>");
-			this.setTextById("jcPlayer_"+this.appName+"_track",	active_info["title"] + " / " + active_info["artist"]+ " &nbsp; [" + (this.activeTrack+1) + "/" + this.activeSize + "]" + track_album);
+			if (active_info["artist"]) {
+				this.setTextById("jcPlayer_"+this.appName+"_track",	active_info["title"] + " / " + active_info["artist"]+ " &nbsp; [" + (this.activeTrack+1) + "/" + this.activeSize + "]" + track_album);
+				}
+			else {
+				this.setTextById("jcPlayer_"+this.appName+"_track",	active_info["title"] + " &nbsp; [" + (this.activeTrack+1) + "/" + this.activeSize + "]" + track_album);
+				}
 			this.setTextById("jcPlayer_"+this.appName+"_file",	active_info["file"]);
 			}
 		else {
@@ -287,20 +298,20 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 
 	// sort playlist
 	this.sort_list = function(tracks) {
-                var sort_t    = [];
-                var album     = {};
+		var sort_t    = [];
+		var album     = {};
 		var tracklist = [];
 		var a         = 0;
-                for (var x in tracks) {
-                        //console.log(tracks[x]["track_num"][0] + "_" + tracks[x]["uuid"]);
-                        var mykey = tracks[x]["track_num"][0];
-                        sort_t.push(mykey);
-                        album[mykey] = tracks[x]["uuid"];
+		for (var x in tracks) {
+			//console.log(tracks[x]["track_num"][0] + "_" + tracks[x]["uuid"]);
+			var mykey = tracks[x]["track_num"][0];
+			sort_t.push(mykey);
+			album[mykey] = tracks[x]["uuid"];
 			a++;
-                        }
-                sort_t.sort(this.sortNumber);
-                count = 0;
-                for (var key in sort_t) { tracklist.push(album[sort_t[key]]); }
+			}
+		sort_t.sort(this.sortNumber);
+		count = 0;
+		for (var key in sort_t) { tracklist.push(album[sort_t[key]]); }
 		return tracklist;
 		}
 
