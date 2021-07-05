@@ -96,12 +96,15 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 	this.activeCtrl["progress_padding"] = "";
 
 	// player control, audio, urls ...
-	this.player      = "";
-	this.audio       = document.createElement("audio");
-	this.url	 = music_url;
-	this.url_c	 = cover_url;
-	this.playing     = 0;
-	this.volume      = 1;
+	this.player        = "";
+	this.audio         = document.createElement("audio");
+	this.url           = music_url;
+	this.url_c         = cover_url;
+	this.playing       = 0;
+	this.volume        = 1;
+	
+	this.buttonColor   = "";
+	this.progressColor = "";
 
 
 	// init player incl. controls
@@ -257,13 +260,13 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		}
 
 	this.musicStatus = function() {
-		var date     	= new Date();
-		var text     	= "";
-		var progress 	= this.audio.currentTime / this.audio.duration * 100;
-		var timeleft_o 	= this.audio.duration - this.audio.currentTime;
-		var timeleft_m  = Math.floor( timeleft_o / 60 );
-		var timeleft_s  = Math.round( timeleft_o - (timeleft_m * 60) - 1);
-		if (timeleft_s < 10) { timeleft_s = "0" + timeleft_s; }
+		var date	= new Date();
+		var text	= "";
+		var progress	= this.audio.currentTime / this.audio.duration * 100;
+		var timeleft_o	= this.audio.duration - this.audio.currentTime;
+		var timeleft_m	= Math.floor( timeleft_o / 60 );
+		var timeleft_s	= Math.round( timeleft_o - (timeleft_m * 60) - 1);
+		if (timeleft_s	< 10) { timeleft_s = "0" + timeleft_s; }
 		var timeleft    = timeleft_m + ":" + timeleft_s;
 
 		//this.setTextById("jcPlayer_"+this.appName+"_playlist", progress );
@@ -272,7 +275,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 			}
 
 		if (timeleft.indexOf(":") > 0) 	{ this.setTextById("jcPlayer_progresstime", "[ -"+timeleft+" ]"); }
-		else				{ this.setTextById("jcPlayer_progresstime", "[ -x:xx ]"); }
+		else					{ this.setTextById("jcPlayer_progresstime", "[ -x:xx ]"); }
 
 		this.activeCtrl["id_album"] = this.activeAlbum["uuid"];
 		this.activeCtrl["id_track"] = this.activeTracklist[this.activeTrack];
@@ -319,7 +322,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 	this.sortNumber = function(a,b) { return a - b; }
 	this.setTextById = function(id,text) {
 		if (document.getElementById(id)) 	{ document.getElementById(id).innerHTML = text; }
-		else					{ console.error("jcPlayer: ERROR setTextById - "+id); }
+		else					{ console.warn("jcPlayer: ERROR setTextById - "+id); }
 		}
 		
 	this.printInfoCover = function() {
@@ -349,16 +352,20 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 
 	this.printButtons = function() {
 		var player = "";		
+		var color  = "";
+		
+		if (this.buttonColor != "") { color = " style='background:"+this.buttonColor+";' "; }
+	
 		player += "<tr><td colspan='2' class='jcPlayer_td_control'>";
 		player +=    "<div id=\"jcPlayer_"+this.appName+"_control\" class=\"jcPlayer_control\"></div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_last\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".last();\">"+this.button("back")+"</div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_play\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".play();\">"+this.button("play")+"</div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".next();\">"+this.button("next")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_last\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".last();\" "+color+">"+this.button("back")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_play\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".play();\" "+color+">"+this.button("play")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".next();\" "+color+">"+this.button("next")+"</div>";
 		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button empty\"></div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_plause\"  class=\"jcPlayer_button\"  onclick=\""+this.appName+".pause();\">"+this.button("pause")+"</div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".stop();\">"+this.button("stop")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_plause\"  class=\"jcPlayer_button\"  onclick=\""+this.appName+".pause();\" "+color+">"+this.button("pause")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".stop();\"  "+color+">"+this.button("stop")+"</div>";
 		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button empty\"></div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".scroll_to("+this.appName+".appScrollTo);\">"+this.button("goto")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".scroll_to("+this.appName+".appScrollTo);\" "+color+">"+this.button("goto")+"</div>";
 		player +=     "</div>";
 		player += "</td></tr>";
 		return player;
@@ -366,12 +373,16 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 
 	this.printButtonsStream = function() {
 		var player = "";		
+		var color  = "";
+		
+		if (this.buttonColor != "") { color = " style='background:"+this.buttonColor+";' "; }
+	
 		player += "<tr><td colspan='2' class='jcPlayer_td_control'>";
 		player +=    "<div id=\"jcPlayer_"+this.appName+"_control\" class=\"jcPlayer_control\"></div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_play\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".play();\">"+this.button("play")+"</div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".stop();\">"+this.button("stop")+"</div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button empty\"  onclick=\""+this.appName+".next();\"></div>";
-		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".scroll_to("+this.appName+".appScrollTo);\">"+this.button("goto")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_play\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".play();\" "+color+">"+this.button("play")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".stop();\" "+color+">"+this.button("stop")+"</div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_next\"    class=\"jcPlayer_button empty\"  onclick=\""+this.appName+".next();\" "+color+"></div>";
+		player +=	"<div id=\"jcPlayer_"+this.appName+"_stop\"    class=\"jcPlayer_button\"  onclick=\""+this.appName+".scroll_to("+this.appName+".appScrollTo);\" "+color+">"+this.button("goto")+"</div>";
 		player +=     "</div>";
 		player += "</td></tr>";
 		return player;
@@ -379,10 +390,14 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 
 	this.printProgress = function() {
 		var player = "";		
+		var color  = "";
+
+		if (this.progressColor != "") { color = " style='background:"+this.progressColor+";' "; }
+	
 		player += "<tr id='jcPlayer_tr_progress' style='visibility:hidden;'><td class='jcPlayer_td_time'>";
 		player += 	"<div id=\"jcPlayer_progresstime\"></div>";
 		player += "</td><td class='jcPlayer_td_progress'>";
-		player += 	"<div id=\"jcPlayer_progressbar\"><div id=\"jcPlayer_progress\"></div></div>";
+		player += 	"<div id=\"jcPlayer_progressbar\"><div id=\"jcPlayer_progress\" "+color+"></div></div>";
 		player += "</td></tr>";
 		return player;
 		}
