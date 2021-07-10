@@ -31,7 +31,7 @@ function fileUpload(callback, param="")
 //-------------------------------------------------------
 
 var loaded        = false;
-var UploadDateien = [];
+var UploadFiles   = [];
 var UploadScript  = "upload.php";
 
 
@@ -39,19 +39,22 @@ var UploadScript  = "upload.php";
 // Default form ...
 //--------------------------
 
-function defaultForm(dir="",type="") {
+function defaultForm(dir="",type="",visibleValues=false) {
 
-	var default_form = '<div id="uploadzone" class="droparea" ondrop="drop(event)" ondragover="allowDrop(event)"> \
+	var default_form = ' \
+	<div id="uploadzone" class="droparea" ondrop="drop(event)" ondragover="allowDrop(event)"> \
+	<form id="jc-upload-form"> \
         	<small>Datei hierher ziehen:</small> \
         	<output id="list"></output> \
 	</div> \
 	<div class="upload"> \
         <input type="file" id="files" name="files[]" /><br/>';
+        
+        if (visibleValues)	{ var visible = 'style="display:block"'; }
+        else			{ var visible = 'style="display:none"'; }
 
-	if (dir != "") {
-		default_form += '<input id="upload_dir"  value="' + dir + '" />';
-		default_form += '<input id="upload_type" value="' + type + '" />';
-		}
+	default_form += '<input id="jc-upload-dir"  value="' + dir + '"  '+visible+'/>';
+	default_form += '<input id="jc-upload-type" value="' + type + '" '+visible+'/>';
 
 	default_form += '<hr style="background:gray;height:1px;border:0px;margin:5px;" /> \
 	<div class="uploadCol"> \
@@ -64,6 +67,7 @@ function defaultForm(dir="",type="") {
             <div id="fileType"></div> \
 	    <input id="fName" style="display:none;" /> \
 	</div> \
+	</form> \
 	</div> \
 	';
 	return default_form;
@@ -72,8 +76,8 @@ function defaultForm(dir="",type="") {
 
 //--------------------------
 
-function defaultUpload(id) {
-	document.getElementById(id).innerHTML = default_form;
+function defaultUpload(id,dir="",type="",visibleValues=false) {
+	document.getElementById(id).innerHTML = defaultForm(dir,type,visibleValues);
 	}
 
 
@@ -103,7 +107,7 @@ function drop(ev) {
         var files =  ev.dataTransfer.files;
         var file  = [files[0]];
         dateiauswahl2(file);
-        UploadDateien = file;
+        UploadFiles = file;
 
         if (file[1]) { alert("Upload nur Bild zur selben Zeit."); }
         //fileUpload(files);
@@ -115,8 +119,8 @@ function drop(ev) {
 //--------------------------
 
 function dateiauswahl(evt) {
-		UploadDateien = evt.target.files; // FileList object
-		dateiauswahl2(UploadDateien);
+		UploadFiles = evt.target.files; // FileList object
+		dateiauswahl2(UploadFiles);
 	}
 
 //--------------------------
@@ -124,10 +128,10 @@ function dateiauswahl(evt) {
 function dateiauswahl2(files) {
 		//dateien = evt.target.files; // FileList object
 		document.getElementById('list').innerHTML = "";
-		UploadDateien = files;
+		UploadFiles = files;
 
 		// Auslesen der gespeicherten Dateien durch Schleife
-		for (var i = 0, f; f = UploadDateien[i]; i++) {
+		for (var i = 0, f; f = UploadFiles[i]; i++) {
 
 			loaded = true;
 
@@ -166,21 +170,21 @@ function dateiauswahl2(files) {
 
 var client = null;
 
-function fileUpload(callback, param="") {
 
-	//Wieder unser File Objekt
+function fileUpload(callback="", param="") {
 
-	if (typeof UploadDateien !== 'undefined' && UploadDateien[0]) {
-		var file     = UploadDateien[0]; // document.getElementById("fileA").files[0];
+       console.log("Start file upload ...");
+
+	if (typeof UploadFiles !== 'undefined' && UploadFiles[0]) {
+		var file     = UploadFiles[0]; // document.getElementById("fileA").files[0];
 		console.log("1:"+file["name"]);
 		}
 	else {
-		callback(param);
+		console.log("Error: Upload files not defined. ("+param+")");
+		if (callback != "") { callback("Error: Upload files not defined. ("+param+")"); }
 		return;
 		}
 
-	//FormData Objekt erzeugen
-	var formData = new FormData();
 	//XMLHttpRequest Objekt erzeugen
 	client       = new XMLHttpRequest();
 
@@ -192,8 +196,11 @@ function fileUpload(callback, param="") {
 	prog.value = 0;
 	prog.max   = 100;
 
-	//Fügt dem formData Objekt unser File Objekt hinzu
+	//FormData Objekt erzeugen
+	var formData = new FormData();
 	formData.append("datei", file);
+	formData.append("upload_dir",  document.getElementById("jc-upload-dir").value);
+	formData.append("upload_type", document.getElementById("jc-upload-type").value);
 
     client.onerror = function(e) {
         alert("onError");
@@ -205,6 +212,9 @@ function fileUpload(callback, param="") {
         prog.value = prog.max;
 	//if (p == 100)  { alert("test1"); }
 	console.log("Upload DONE: "+client.status);
+	console.debug("---- Upload response ----");
+	console.debug(client.responseText);
+	console.debug("----");
 	if (client.status != 200) { alert("Error: "+client.status); }
     	};
 
@@ -214,7 +224,7 @@ function fileUpload(callback, param="") {
         document.getElementById("prozent").innerHTML 	= p + "%";
 
 	//console.log("progress: "+p);
-	if (p == 100)  {
+	if (callback != "" && p == 100)  {
 		setTimeout(function(){ callback(param); },1000 );
 		}
 
@@ -226,8 +236,9 @@ function fileUpload(callback, param="") {
 	console.log("Upload ABORT: "+client.status);
     	};
 
-	client.open("POST", UploadScript);
-	client.send(formData);
+     console.log("Call Upload script: "+UploadScript);
+     client.open("POST", UploadScript);
+     client.send(formData);
 
 }
 
