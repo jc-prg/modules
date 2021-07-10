@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="ISO-8859-1"> 
+<title>jc://upload/test/</title>
+
+<link rel="stylesheet" href="./upload-0.3.0.css">
+<script src="./upload-0.3.0.js"></script>
+
+</head>
+<body>
+
+	<div id="uploadform"></div>
+	<script>
+		appUpload = new jcUpload("appUpload","uploadform");
+		appUpload.uploadScript = "upload-0.3.0.php";
+		appUpload.init(uploadPath="upload-test",uploadType="",visibleValues=true,visibleButton=true);
+	</script>
+
+</body>
+</html>
