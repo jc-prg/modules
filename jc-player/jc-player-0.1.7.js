@@ -154,13 +154,20 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		this.activeData       = data;
 		this.activeAlbum      = data["album"];
 		this.activeTracks     = data["tracks"];
-		if (data["scrollto"])			{ this.appScrollTo = data["scrollto"]; }
-		if (data["goto"])			{ this.appGoto     = data["goto"]; }
-				
-		if      (this.activeData["type"] == "album") 		{ this.activeTracklist  = this.sort_list(data["tracks"]); }
-		else if (this.activeData["type"] == "podcast") 	{ this.activeTracklist  = this.sort_list(data["tracks"]); }
-		else if (this.activeData["type"] == "list")		{ this.activeTracklist  = this.activeAlbum["tracks"]; }
-		else if (this.activeData["type"] == "stream")		{ 
+		this.activeTracklist  = [];
+
+		if (data["track_sort"].length>0)	{ this.activeTracklist = data["track_sort"]; }
+		if (data["scrollto"])			{ this.appScrollTo     = data["scrollto"]; }
+		if (data["goto"])			{ this.appGoto         = data["goto"]; }
+		
+		if (this.activeTracklist.length==0) {
+			if      (this.activeData["type"] == "album") 		{ this.activeTracklist  = this.sort_list(data["tracks"]); }
+			else if (this.activeData["type"] == "podcast") 	{ this.activeTracklist  = this.sort_list(data["tracks"]); }
+			else if (this.activeData["type"] == "list")		{ this.activeTracklist  = this.activeAlbum["tracks"]; }
+			}
+
+
+		if (this.activeData["type"] == "stream")		{ 
 		
 			var track = {};
 			track["titel"]     = this.activeAlbum["title"];
@@ -175,8 +182,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 			
 			this.init("stream");
 			}
-		else						{ this.activeTracklist  = this.activeAlbum["tracks"]; }
-		
+
 		console.debug(this.activeTracklist);
 
 		this.activeSize             = this.activeTracklist.length;
@@ -206,7 +212,6 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 		var active      = this.activeTrack;
 		var active_id   = this.activeTracklist[active];
 		var active_info = this.activeTracks[active_id];
-		
 		var active_img  = this.activeAlbum["cover_image"]; // doesn't work any more
 		
 		// define audio file or url (if stream)
@@ -219,7 +224,7 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
   		this.audio.onended = function(){
 			console.log(playerApp.activeTrack+" < "+(playerApp.activeSize-1));
 			if (playerApp.activeTrack < playerApp.activeSize-1)	{ playerApp.next(); }		// play next, if not last
-			else                                           		{ playerApp.audio.remove(); } 	// remove after playing to clean the Dom
+			else                                           	{ playerApp.audio.remove(); } 	// remove after playing to clean the Dom
   			};
 
 		// further parameter that might be interesting (see also https://www.w3schools.com/tags/ref_av_dom.asp)
