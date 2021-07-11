@@ -12,8 +12,8 @@
 */
 //-------------------------------------------------------
 /* INDEX:
-function defaultForm(dir="",type="")
-function defaultUpload(id)
+function defaultForm(dir="",type="",visibleValues=false)
+function defaultUpload(id,dir="",type="",visibleValues=false)
 function enableUpload()
 function allowDrop(ev)
 function drag(ev)
@@ -22,7 +22,7 @@ function dateiauswahl(evt)
 function dateiauswahl2(files)
 			reader.onload = (function (theFile)
 				return function (e)
-function fileUpload(callback, param="")
+function fileUpload(callback="", param="")
     client.onerror = function(e)
     client.onload = function(e)
     client.upload.onprogress = function(e)
