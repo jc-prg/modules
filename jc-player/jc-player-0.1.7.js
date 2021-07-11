@@ -45,6 +45,8 @@ data = {
 		"artist"       : "<artist-name>",
 		"uuid"         : "<album-uuid>",
 		"tracks"       : ["<uuid-1>","<uuid-2>"],
+		"goto"         : "<goto command javascript>",
+		"scrollto"     : "<scroll to element id>",
 		"cover_image"  : "<url-cover-image>",
 		}
 	"tracks" : [
