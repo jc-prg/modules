@@ -304,6 +304,45 @@ function jcTable(name) {
 	}
 
 //--------------------------------
+// logging
+//--------------------------------
+
+
+function jcLogging(name) {
+
+	this.app_name       = name;
+	
+	this.log      = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.log(this.app_name   + ": " + message); }
+		else { console.log(this.app_name   + ": "); console.log(message); }
+		}
+	this.default  = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.log(this.app_name   + ": " + message); }
+		else { console.log(this.app_name   + ": "); console.log(message); }
+		}
+	this.info     = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.info(this.app_name   + ": " + message); }
+		else { console.info(this.app_name   + ": "); console.info(message); }
+		}
+	this.warn     = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.warn(this.app_name   + ": " + message); }
+		else { console.warn(this.app_name   + ": "); console.warn(message); }
+		}
+	this.warning  = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.warn(this.app_name   + ": " + message); }
+		else { console.warn(this.app_name   + ": "); console.warn(message); }
+		}
+	this.debug    = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.debug(this.app_name   + ": " + message); }
+		else { console.debug(this.app_name   + ": "); console.debug(message); }
+		}
+	this.error    = function (message) { 
+		if (typeof message === 'string' || message instanceof String) { console.error(this.app_name   + ": " + message); }
+		else { console.error(this.app_name   + ": "); console.error(message); }
+		}
+	}
+
+//--------------------------------
 // tool tip
 //--------------------------------
 
