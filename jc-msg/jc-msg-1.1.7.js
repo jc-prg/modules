@@ -90,15 +90,15 @@ function jcMsg(app_name,app_link="") {
 	this.wait_small = function (text="", callback="", callback_label="") {
 		this.show();
 
-		var height  = 130;
+		var height  = 160;
 		var message = "";
 		message += "<table border='0' style='width:100%'><tr><td valign='top'><br/>";
 		message += text;
-		message += "</td><td style='width:100px'>";
-		message += "<img src='"+this.waiting_img[0]+"' style='height:100px;width:100px;' class='jcMsgImg'>";
+		message += "</td><td style='width:100px'><br/>";
+		message += "<img src='"+this.waiting_img[0]+"' style='height:80px;width:80px;' class='jcMsgImg'>";
 		message += "</td></tr></table>";
 
-		this.body.style.backgroundSize     = "100px";
+		this.body.style.backgroundSize     = "100%";
 		this.body.style.width              = this.message_width(this.default_width)+"px";
 		this.body.style.height             = this.message_height(height)+"px";
 		this.body.style.top                = this.message_top(height)+"px";
@@ -124,13 +124,16 @@ function jcMsg(app_name,app_link="") {
 	
 	this.wait_time = function (text="",time=10) {
 		var message  = text;
-		message     += "<br/><br/>"+this.wait_progressbar(time); 
+		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time); 
 		this.wait_small(message, "", "Cancel");
 		var app = this;
 		var interval = setInterval(function() {
 			var progress = document.getElementById(app.appName+'_wait_progress');
 			var value    = progress.value+1;
 			progress.value = value;
+			var timeleft = document.getElementById(app.appName+'_wait_left').innerHTML;
+			timeleft    -= 1;
+			document.getElementById(app.appName+'_wait_left').innerHTML = timeleft;
 			},1000);
 			
 		setTimeout(function () {
@@ -141,7 +144,8 @@ function jcMsg(app_name,app_link="") {
 		
 	this.wait_progressbar = function (max=100) {
 		var text = "";
-		text += '<progress id="' + this.appName + '_wait_progress" value="0" min="0" max="'+max+'" class="jcMsgProgress">';
+		text += '<progress id="' + this.appName + '_wait_progress" value="0" min="0" max="'+max+'" class="jcMsgProgress"></progress>';
+		text += '&nbsp;&nbsp;&nbsp;<info id="' + this.appName + '_wait_left">'+max+'</info>&nbsp;s';
 		return text;
 		}
 		
@@ -155,8 +159,8 @@ function jcMsg(app_name,app_link="") {
 		this.show();
 		this.body.style.backgroundImage    = "url('"+this.waiting_img[0]+"')";
 		this.body.style.backgroundRepeat   = "no-repeat";
-		this.body.style.backgroundPosition = "center";
-		this.body.style.backgroundSize     = "100px";
+		this.body.style.backgroundPosition = "50% 60%";
+		this.body.style.backgroundSize     = "25%";
 		this.body.style.width		   = this.message_width(this.default_width)+"px";
 		this.body.style.height		   = this.message_height(height)+"px";
 		this.body.style.top		   = this.message_top(height)+"px";
