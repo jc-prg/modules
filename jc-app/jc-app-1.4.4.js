@@ -1,22 +1,22 @@
 // jcApp - REST API Interaction Framework
 // by (c) Christoph Kloth
 //==============================================================================
-/* IMPLEMENTATION:
+// USAGE:
+//
+// var myApp   = new jcApp( "myApp", RESTurl, "remote/list/", "remoteSend/");     // cmd: <device>/<cmd>
+// myApp.init( "data_log", "error_log", reloadInterval, printAppStatus );
+// myApp.loadWhenSend = true;
+// myApp.callback     = true;	// sendCmd -> use 2nd param as callback function (if exist)
+// myApp.load();                // initial load
+// myApp.setAutoupdate();	    // use to start interval
+// myApp.requestAPI_init();	    // use if you want to use a queue
+//
+// function printAppStatus(data) {
+//	document.write(data[]);
+//	}
+//
+//------------------------------------------------------
 
- var myApp   = new jcApp( "myApp", RESTurl, "remote/list/", "remoteSend/");     // cmd: <device>/<cmd>
- myApp.init( "data_log", "error_log", reloadInterval, printAppStatus );
- myApp.loadWhenSend = true;
- myApp.callback     = true;	// sendCmd -> use 2nd param as callback function (if exist)
- myApp.load();			// initial load
- myApp.setAutoupdate();	// use to start interval
- myApp.requestAPI_init();	// use if you want to use a queue
-
- function printAppStatus(data) {
-	document.write(data[]);
-	}
-	
-*/
-//--------------------------------------
 
 var jcAppTest    = true;
 
@@ -24,7 +24,7 @@ var jcAppTest    = true;
 function jcApp( name, url, list_cmd, send_cmd ) {
 
 	this.appName         = name;
-	this.appVersion      = "v1.4.2";
+	this.appVersion      = "v1.4.3";
 	this.appStatField    = name + "_status";
 	this.appUrl          = url;
 	this.appList         = list_cmd;
@@ -39,7 +39,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.appUpdateCurrent = -1;
 	this.appIntervalMain = -1;
 	this.appIntervalCall = -1;
-	this.appIntervalTemp = -1;
+	this.appIntervalTemp = -1; // -1 -> enable temp interval -> this.appUpdateTemp in seconds
 
 	this.errorList       = [];
 	this.errorCount      = 50;
@@ -48,6 +48,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.lastConnect     = 0;
 	this.maxTimeout      = 15000;  	// set to -1 for no timeout
 	this.timeout         = -1;
+	this.error_timeout   = false;
 	
 	this.queue           = [];
 	this.use_queue       = false;
@@ -65,8 +66,9 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 	console.log("Start " + this.appName + " (jcApp " + this.appVersion + ")");
 
-	this.init      	        = function( data_container, error_container, update_interval, printFunction, printRequest ) {
-        // set central parameteres
+	// set central parameters
+	this.init = function( data_container, error_container, update_interval, printFunction, printRequest ) {
+
 		if (data_container!="") {
 			this.appTarget     = data_container; }			// html element for app content (if required)
 		else {	this.appTarget	   = this.appName + "_data"; }
@@ -76,11 +78,12 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 		if (jcAppTest) { console.log("Container: "+this.appTarget+"/"+this.appError); }
 
-		this.appUpdate = update_interval;	// interval for reload;
+		this.appUpdate     = update_interval;	// interval for reload;
 		this.appUpdateCurrent = this.appUpdate;
 
 		this.printFunction = printFunction;	// callback for this.load();
-		this.printRequest = printRequest;
+		this.printRequest  = printRequest;
+
 
 		var show_error2 = "";
 		var show_error  = " onClick=\"javascript:"+this.appName+".errorLogShow();\" ";
@@ -104,8 +107,8 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			}}
 		}
 
-	this.errorLog           = function( new_msg, start_time ) {
-	    // write error log
+	// write error log
+	this.errorLog = function( new_msg, start_time ) {
 		var msg   = document.getElementById(this.appError).innerHTML;
 		var stamp = new Date();
 		var time  = stamp.toLocaleTimeString();
@@ -148,21 +151,21 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		// Idee: id="errorLink_"+this.appName => rot aufleuchten lassen, wenn Fehler gemeldet wird
 		}
 
-	this.errorGetLog        = function () {
-	    // read existing log
-    	log = document.getElementById(this.appError).innerHTML;
+	// read existing log
+    this.errorGetLog = function () {
+		log = document.getElementById(this.appError).innerHTML;
 		return log.split("<br/>");
 		}
 
-	this.errorLogShow       = function() {
-	    // show / hide error log
+	// show / hide error log
+	this.errorLogShow = function() {
 		id = this.appError;
 		if (this.IsHidden(id)) { this.elementVisible(id); }
 		else                   { this.elementHidden(id); }
 		}
 
-	this.time               = function() {
-	    // get time
+	// get time
+	this.time = function() {
 		var old = this.lastConnect;
 		var d   = new Date();
 		this.lastConnect = d.getTime();
@@ -170,37 +173,37 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		//console.log(old+"/"+this.lastConnect+"/"+(this.lastConnect-old));
 		}
 		
-	this.setTimeout         = function(timeout=-1) {
-        // set timeout
+	// set timeout
+	this.setTimeout	= function(timeout=-1) {
+
 		this.timeout = timeout;
 		}
 
-	this.load               = function(source="",callback="") {
-	    // load data from REST API
+	// load data from REST API
+	this.load = function(source="") {
 		var app  = this;
-	    app.setStatus("waiting");
-	    if (callback == "") { callback = app.printFunction; }
-		app.requestAPI("GET",[app.appList],"", callback,"",source);
+	        app.setStatus("waiting");
+		app.requestAPI("GET",[app.appList],"", app.printFunction,"",source);
 		return;
 		}
 		
-	this.requestAPI_init    = function() {
-	    // start queue
+	// start queue
+	this.requestAPI_init = function() {
 		this.use_queue = true;
 		if (this.timeout == -1 && this.maxTimeout != -1) { this.timeout = this.maxTimeout; }
 		jcAppInterval  = this;
 		setInterval(function(){ jcAppInterval.requestAPI_queue(); }, this.queue_interval);
 		}
 
-	this.requestAPI         = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
-    	// add to queue
-        this.printRequest("START", cmd, source);
+	// add to queue
+	this.requestAPI = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
+	        this.printRequest("START", cmd, source);
 		if (this.use_queue)	{ this.queue.push( [ method, cmd, body_data, callback_array, wait_till_executed, source ] ); }
 		else			{ this.requestAPI_execute( method, cmd, body_data, callback_array, wait_till_executed, source ); }
 		}
 
-	this.requestAPI_queue   = function() {
-	    // execute from queue
+	// execute from queue
+	this.requestAPI_queue = function() {
 		if (this.queue.length > 0) {
 			//if (this.queue.length > 1 && this.queue[0] == this.queue[1]) { this.queue.shift(); }
 			[ method, cmd, body_data, callback_array, wait_till_executed, source ] = this.queue[0];
@@ -210,12 +213,14 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			}
 		}
 
+	// send cmd to rest API
 	this.requestAPI_execute = function( method, cmd, body_data, callback_array="", wait_till_executed="", source="") {
-        // send cmd to rest API
+
 		var callback;
-		var app  	 	= this;
+		var app  	 	    = this;
 		var start_time	 	= new Date();
 		var transfer_cmd 	= "";
+		this.error_timeout  = false;
 
 		if (Array.isArray(callback_array))      { callback = callback_array[0]; callback_param = callback_array[1]; }
 		else                                    { callback = callback_array;    callback_param = "";}
@@ -253,10 +258,10 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				// .status -> http return codes 2xx OK, 3xx redirect, 4xx client error, 5xx server error
 				var data = JSON.parse(xhttp.responseText);
 
-				console.debug(app.appName + " " + method + ": " + requestURL + " - OK");
-				//console.debug(data);
+                if (data != null)   { console.debug(app.appName + " " + method + ": " + requestURL + " - OK"); }
+                else                { console.error("No data returned: " + app.appName + " " + method + ": " + requestURL); data = {}; }
 
-              	app.errorLog( 'Success: ' + app.appName + ' - ' + requestURL + ' (' + xhttp.status + ').',start_time);
+                app.errorLog( 'Success: ' + app.appName + ' - ' + requestURL + ' (' + xhttp.status + ').',start_time);
 				app.setStatus('running');
 				app.time();
 				app.appSendData = data;
@@ -307,7 +312,8 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 		// set timeout if defined
 		if (this.timeout > -1 && asyncronous) {
-			xhttp.ontimeout = function () { 
+			xhttp.ontimeout = function () {
+			    xhttp.error_timeout = true;
 				console.error("The request for " + requestURL + " timed out: " + xhttp.timeout + "ms / " + cmd + " / " + source );
 				app.printRequest("TIMEOUT", cmd, source);
 				};
@@ -335,45 +341,49 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		*/
 		}
 
-	this.sendCmd            = function( cmd, callback, wait="" ) {
-	    // send cmd to rest API - initial => to stay compartible
+	// send cmd to rest API - initial => to stay compatible
+	this.sendCmd = function( cmd, callback, wait="" ) {
 		var data = {};
 		this.requestAPI_execute("GET", cmd, data, callback, wait, "sendCmd");
 		}
 
-	this.sendCmdSync        = function( cmd, callback ) {
-	    // send cmd to rest API (synchronuous) => to stay compartible
+	// send cmd to rest API (synchronous) => to stay compatible
+	this.sendCmdSync = function( cmd, callback ) {
 		var data = {};
 		this.requestAPI_execute("GET", cmd, data, callback, "wait", "sendCmdSync");
 		}
 
-	this.sendCmdPwd         = function( cmd, pwd, callback ) {
-	    // send cmd to rest API including a password => to stay compartible
+	// send cmd to rest API including a password => to stay compatible
+	this.sendCmdPwd = function( cmd, pwd, callback ) {
 		var data = {};
 		cmd.push( pwd );
 		this.requestAPI_execute("GET", cmd, data, callback, "", "sendCmdPwd");
 		}
 
-	this.setAutoupdate      = function(callback="",interval="") {
-	    // set auto update
+	// set auto update
+	this.setAutoupdate = function(callback="",interval="") {
 		var app = this;
+		
 		if (interval == "")		{ interval = this.appUpdate; this.appUpdateCurrent = this.appUpdate; }
 		if (app.appIntervalMain != -1) { clearInterval(app.appIntervalMain); app.appIntervalMain = -1; }
+			
 		if (interval > 0) {
 			console.log("Set reload intervall to "+interval+"s ...");
-			app.appIntervalMain     = setInterval(function(){app.load("setAutoupdate",callback);}, interval * 1000);
+			app.appIntervalMain = setInterval(function(){app.load("setAutoupdate")}, interval * 1000);
+			if (callback!="") {
+				app.appIntervalCall = setInterval(function(){callback()}, interval * 1000);
+				}
 			}
 		else {
-			clearInterval(app.appIntervalMain);
-			console.log("Cleared reload intervall ...");
+			console.log("Cleared reload interval ...");
 			}
 		}
-		
+
+	// set auto update - additional interval when loading data
 	this.setAutoupdateLoading = function(on=true,info="") {
-    	// set auto update - additional interval when loading data
 		var app = this;
 		if (on && app.appIntervalTemp < 0) {
-		    this.appUpdateCurrent = this.appUpdateTemp;
+		    app.appUpdateCurrent = app.appUpdateTemp;
 			app.appIntervalTemp = setInterval(function(){app.load("setAutoupdateLoading")}, this.appUpdateTemp * 1000);
 			console.log("Add temporary reload interval to 1s for loading process ("+on+"/"+app.appIntervalTemp+"/"+info+") ...");
 			}
@@ -388,8 +398,8 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	// SUPPORT FUNCTIONS
 	// ------------------------
 
+    // set <div id="name_status"> to color code
 	this.setStatus = function(cmd) {
-        // set <div id="name_status"> to color code
                 e = document.getElementById(this.appStatField);
                 c = "gray";
 
@@ -422,6 +432,5 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		if (jcAppTest) { console.log(this.appName + ".elementVisible: " + id); }
 		document.getElementById(id).style.display = "block";
   		}
+
 }
-
-
