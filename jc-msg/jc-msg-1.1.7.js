@@ -126,17 +126,25 @@ function jcMsg(app_name,app_link="") {
 		var message  = text;
 		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time); 
 		this.wait_small(message, "", "Cancel");
+
+        var time_start = new Date().getTime() / 1000;
+        var time_max   = time_start + time;
+
 		var app = this;
+		document.getElementById(app.appName+'_wait_start'). innerHTML = time_start;
+		document.getElementById(app.appName+'_wait_max'). innerHTML = time_max;
+
 		var interval = setInterval(function() {
 			var progress   = document.getElementById(app.appName+'_wait_progress');
 			var time_left  = document.getElementById(app.appName+'_wait_left').innerHTML;
 			var time_start = document.getElementById(app.appName+'_wait_start').innerHTML;
 			var time_max   = document.getElementById(app.appName+'_wait_max').innerHTML;
-			var time_current = new Date().getTime();
-			time_left    -= 1;
-			time_left     = Math.round(time_max - (time_current - time_start)/1000);
-			time_diff     = Math.round((time_current - time_start)/1000);
+			var time_current = new Date().getTime() / 1000;
+
+			time_left      = Math.round(time_max - time_current);
+			time_diff      = Math.round(time_current - time_start);
 			document.getElementById(app.appName+'_wait_left').innerHTML = time_left;
+
 			var value      = time_diff; // progress.value+1;
 			progress.value = value;
 			if (time_left < 0) {
@@ -154,8 +162,9 @@ function jcMsg(app_name,app_link="") {
 	this.wait_progressbar = function (max=100) {
 		var text = "";
 		var date = new Date().getTime();
+		var show = Math.round(max - date);
 		text += '<progress id="' + this.appName + '_wait_progress" value="0" min="0" max="'+max+'" class="jcMsgProgress"></progress>';
-		text += '&nbsp;&nbsp;&nbsp;<info id="' + this.appName + '_wait_left">'+max+'</info>&nbsp;s';
+		text += '&nbsp;&nbsp;&nbsp;<info id="' + this.appName + '_wait_left">' + max + '</info>&nbsp;s';
 		text += '<info id="' + this.appName + '_wait_start" style="display:none">' + date + '</info>';
 		text += '<info id="' + this.appName + '_wait_max" style="display:none">' + max + '</info>';
 		return text;
