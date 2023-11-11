@@ -27,7 +27,7 @@ function jcMsg(app_name,app_link="") {
 
 	this.appName     = app_name;
 	this.appLink     = app_name;
-	this.appVersion  = "v1.1.5";
+	this.appVersion  = "v1.1.6";
 	
 	this.waiting_img    = ["modules/jc-msg/waiting.gif","modules/jc-msg/waiting2.gif"];
 	this.default_height = 250;
