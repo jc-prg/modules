@@ -27,7 +27,7 @@ function jcMsg(app_name,app_link="") {
 
 	this.appName     = app_name;
 	this.appLink     = app_name;
-	this.appVersion  = "v1.1.5";
+	this.appVersion  = "v1.1.7";
 	
 	this.waiting_img    = ["modules/jc-msg/waiting.gif","modules/jc-msg/waiting2.gif"];
 	this.default_height = 250;
@@ -126,14 +126,31 @@ function jcMsg(app_name,app_link="") {
 		var message  = text;
 		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time); 
 		this.wait_small(message, "", "Cancel");
+
+        var time_start = new Date().getTime() / 1000;
+        var time_max   = time_start + time;
+
 		var app = this;
+		document.getElementById(app.appName+'_wait_start'). innerHTML = time_start;
+		document.getElementById(app.appName+'_wait_max'). innerHTML = time_max;
+
 		var interval = setInterval(function() {
-			var progress = document.getElementById(app.appName+'_wait_progress');
-			var value    = progress.value+1;
+			var progress   = document.getElementById(app.appName+'_wait_progress');
+			var time_left  = document.getElementById(app.appName+'_wait_left').innerHTML;
+			var time_start = document.getElementById(app.appName+'_wait_start').innerHTML;
+			var time_max   = document.getElementById(app.appName+'_wait_max').innerHTML;
+			var time_current = new Date().getTime() / 1000;
+
+			time_left      = Math.round(time_max - time_current);
+			time_diff      = Math.round(time_current - time_start);
+			document.getElementById(app.appName+'_wait_left').innerHTML = time_left;
+
+			var value      = time_diff; // progress.value+1;
 			progress.value = value;
-			var timeleft = document.getElementById(app.appName+'_wait_left').innerHTML;
-			timeleft    -= 1;
-			document.getElementById(app.appName+'_wait_left').innerHTML = timeleft;
+			if (time_left < 0) {
+			    app.hide();
+    			clearInterval(interval);
+			    }
 			},1000);
 			
 		setTimeout(function () {
@@ -144,8 +161,12 @@ function jcMsg(app_name,app_link="") {
 		
 	this.wait_progressbar = function (max=100) {
 		var text = "";
+		var date = new Date().getTime();
+		var show = Math.round(max - date);
 		text += '<progress id="' + this.appName + '_wait_progress" value="0" min="0" max="'+max+'" class="jcMsgProgress"></progress>';
-		text += '&nbsp;&nbsp;&nbsp;<info id="' + this.appName + '_wait_left">'+max+'</info>&nbsp;s';
+		text += '&nbsp;&nbsp;&nbsp;<info id="' + this.appName + '_wait_left">' + max + '</info>&nbsp;s';
+		text += '<info id="' + this.appName + '_wait_start" style="display:none">' + date + '</info>';
+		text += '<info id="' + this.appName + '_wait_max" style="display:none">' + max + '</info>';
 		return text;
 		}
 		

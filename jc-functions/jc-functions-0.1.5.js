@@ -140,13 +140,13 @@ function setOnclickById(id, script="") {
 //--------------------------------
 
 function check_if_element_or_value(name_value,lowercase=false) {
-        if (name_value == "")										{ console.error("check_if_element_or_value: no value"); return; }
-	if (document.getElementById(name_value) && document.getElementById(name_value).value) 	{ 
-		if (lowercase)	{ return document.getElementById(name_value).value.toLowerCase(); }
-		else 		{ return document.getElementById(name_value).value; }
-		}
-	else					                                                { return name_value; }
-	}
+    if (name_value == "") { console.error("check_if_element_or_value: no value"); return; }
+    if (document.getElementById(name_value) && document.getElementById(name_value).value) 	{
+	    if (lowercase)  { return document.getElementById(name_value).value.toLowerCase(); }
+        else            { return document.getElementById(name_value).value; }
+        }
+	else { return name_value; }
+    }
 
 
 //--------------------------------
@@ -154,13 +154,13 @@ function check_if_element_or_value(name_value,lowercase=false) {
 //--------------------------------
 
 function pageHeight() {
-	var body = document.body;
-	var html = document.documentElement;
+    var body = document.body;
+    var html = document.documentElement;
 	
-	var height = Math.max(	body.scrollHeight, body.offsetHeight,
-				html.clientHeight, html.scrollHeight, html.offsetHeight );
-	return (height);
-	}
+    var height = Math.max( body.scrollHeight, body.offsetHeight,
+                           html.clientHeight, html.scrollHeight, html.offsetHeight );
+    return (height);
+    }
 
 //--------------------------------
 // check if element is hidden
