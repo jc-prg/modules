@@ -2,7 +2,7 @@
 // jc://modules/
 //--------------------------------
 
-modules_js_latest = [
+modules_js = [
     "jc-app/jc-app-1.4.1.js",
     "jc-functions/jc-functions-0.1.5.js",
     "jc-cookie/jc-cookie.js",
@@ -12,7 +12,7 @@ modules_js_latest = [
     "jc-upload/upload.js",
     ];
 
-modules_css_latest = [
+modules_css = [
     "jc-functions/jc-functions-0.1.5.css",
     "jc-msg/jc-msg-1.1.7.css",
     "jc-player/jc-player-0.1.6.css",
