@@ -2,6 +2,8 @@
 // jc://modules/
 //--------------------------------
 
+console.log("jc://modules/v1.1")
+
 modules_js = [
     "jc-app/jc-app-1.4.4.js",
     "jc-functions/jc-functions-0.1.6.js",
