@@ -103,7 +103,7 @@ function setValueById(id, text) {
   	else                                  { console.debug("Element not found: "+id+" (setValueById)"); }
   	}
 
-function getValueById(id, text) {
+function getValueById(id) {
   	if (document.getElementById(id))      { return document.getElementById(id).value; }
   	else                                  { console.debug("Element not found: "+id+" (getValueById)"); }
   	}
