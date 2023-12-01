@@ -3,23 +3,7 @@
 //-----------------------------------------
 // slider for volume control
 // requires jc-volume-slider-<version>.css
-//-----------------------------------------
-/* INDEX
-function jcSlider ( name, container )
-	this.setOnChange	= function(callOnChange="")
-	this.setShowVolume	= function(showVolume="")
-	this.init		= function( min, max, label )
-		this.slider.oninput		= function( )
-		this.slider.onmousedown		= function()
-		this.slider.onmouseup		= function()
-		this.slider.ontouchstart	= function()
-		this.slider.ontouchend		= function()
-	this.setPosition	= function(top=false,bottom=false,left=false,right=false)
-	this.set_value		= function( value )
-	this.show_hide		= function()
-	this.info		= function()
-		alert("Please define a function to be called on change.")
-*/
+
 //-----------------------------------------
 /* SAMPLE IMPLEMENTATION
 
@@ -66,35 +50,34 @@ function jcSlider ( name, container ) {
 	this.init		= function( min, max, label ) {
 		name = this.appName;
 
-		if (this.container == undefined) {
-			this.sliderHTML		= this.create_sliderHTML(name, label, min, max);
-			this.container    		= document.getElementById(this.appContainer);
-			this.container.innerHTML	= this.sliderHTML;
+        if (this.container == undefined) {
+            this.sliderHTML             = this.create_sliderHTML(name, label, min, max);
+            this.container              = document.getElementById(this.appContainer);
+            this.container.innerHTML    = this.sliderHTML;
+            this.slider                 = document.getElementById(name);
+            if (this.slider) {
+                this.slider_value       = document.getElementById(name+"_value");
+                this.slider_cont        = document.getElementById(name+"_container");
+                this.slider_label       = document.getElementById(name+"_label");
+                this.slider_active      = false;
+                }
+            else {
+                console.error(this.appName+": No <DIV ID='"+name+"'> found!");
+                }
 
-			this.slider       		= document.getElementById(name);
-			if (this.slider) {
-				this.slider_value 		= document.getElementById(name+"_value");
-				this.slider_cont  		= document.getElementById(name+"_container");
-				this.slider_label 		= document.getElementById(name+"_label");
-				this.slider_active		= false;
-				}
-			else {
-				console.error(this.appName+": No <DIV ID='"+name+"'> found!");
-				}
+            this.container.style.position 	= "fixed";
+            this.container.style.zIndex     = 98;
 
-			this.container.style.position 	= "fixed";
-			this.container.style.zIndex     = 98;
-			
-			if (this.posBottom != false)	{ this.container.style.bottom = this.posBottom; } 	else { this.container.style.bottom = ""; }
-			if (this.posTop    != false)	{ this.container.style.top    = this.posTop; }		else { this.container.style.top	= ""; }
-			if (this.posLeft   != false)	{ this.container.style.left   = this.posLeft; }		else { this.container.style.left = ""; }
-			if (this.posRight  != false)	{ this.container.style.right  = this.posRight; } 	else { this.container.style.right = ""; }
+            if (this.posBottom != false)	{ this.container.style.bottom = this.posBottom; } 	else { this.container.style.bottom = ""; }
+            if (this.posTop    != false)	{ this.container.style.top    = this.posTop; }		else { this.container.style.top	= ""; }
+            if (this.posLeft   != false)	{ this.container.style.left   = this.posLeft; }		else { this.container.style.left = ""; }
+            if (this.posRight  != false)	{ this.container.style.right  = this.posRight; } 	else { this.container.style.right = ""; }
 
-			}
-		else {
-			document.getElementById(this.appName).setAttribute("min", min);
-			document.getElementById(this.appName).setAttribute("max", max);
-			}
+            }
+        else {
+            document.getElementById(this.appName).setAttribute("min", min);
+            document.getElementById(this.appName).setAttribute("max", max);
+            }
 
 		this.slider_value.innerHTML	= this.slider.value;
 		this.slider_label.innerHTML	= "Device: " + label;
@@ -130,12 +113,12 @@ function jcSlider ( name, container ) {
 		
 	// create slider HTML
 	this.create_sliderHTML	= function(name, label, min, max) {
-		this.sliderHTML   		=  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"display:none\">";
-//		this.sliderHTML   		=  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"visibility:hidden\">";
-		this.sliderHTML   		+= "<input type=\"range\" min=\""+min+"\" max=\""+max+"\" value=\"50\" class=\"slider\" id=\""+name+"\">";
-		this.sliderHTML   		+= "<br/><div id=\""+name+"_value\" class=\"slidervalue\">xx</div>";
-		this.sliderHTML   		+= "<div  id=\""+name+"_label\" class=\"sliderlabel\">"+label+"</div>";
-		this.sliderHTML   		+= "</div>";
+		var html   	 =  "<div id=\""+name+"_container\" class=\"slidecontainer\" style=\"display:none\">";
+		html        += "<input type=\"range\" min=\""+min+"\" max=\""+max+"\" value=\"50\" class=\"slider\" id=\""+name+"\">";
+		html        += "<br/><div id=\""+name+"_value\" class=\"slidervalue\">xx</div>";
+		html        += "<div  id=\""+name+"_label\" class=\"sliderlabel\">"+label+"</div>";
+		html        += "</div>";
+		return html;
 		}
 
 	// set position of slider (if not default)				
