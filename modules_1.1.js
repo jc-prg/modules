@@ -6,7 +6,7 @@ console.log("jc://modules/v1.1")
 
 modules_js = [
     "jc-app/jc-app-1.4.4.js",
-    "jc-functions/jc-functions-0.1.6.js",
+    "jc-functions/jc-functions-0.1.7.js",
     "jc-cookie/jc-cookie.js",
     "jc-msg/jc-msg-1.1.7.js",
     "jc-player/jc-player-0.1.7.js",
@@ -15,7 +15,7 @@ modules_js = [
     ];
 
 modules_css = [
-    "jc-functions/jc-functions-0.1.5.css",
+    "jc-functions/jc-functions-0.1.7.css",
     "jc-msg/jc-msg-1.1.7.css",
     "jc-player/jc-player-0.1.7.css",
     "jc-player/jc-volume-slider-0.1.2.css",
