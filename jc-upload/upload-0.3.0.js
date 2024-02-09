@@ -11,19 +11,6 @@
 	</script>
 */
 //-------------------------------------------------------
-/* INDEX:
-function jcUpload (name, container)
-	this.init		= function(uploadPath="", uploadType="", visibleValues=false, visibleButton=true)
-	this.uploadForm	= function()
-	this.uploadReset	= function()
-	this.fileDrag		= function(event)
-	this.fileDropAllow	= function(event)
-	this.fileDrop		= function(event)
-	this.fileSelect01	= function(e)
-	this.fileSelect02	= function()
-	this.fileUpload	= function(param)
-*/
-//-------------------------------------------------------
 
 
 function jcUpload (name, container) {
@@ -227,6 +214,4 @@ function jcUpload (name, container) {
 
 	}
 
-//-------------------------
-// EOF
-
+module_scripts_loaded += 1;

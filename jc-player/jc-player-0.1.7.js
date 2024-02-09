@@ -1,34 +1,6 @@
 //--------------------------------------------------
 // local HTML5 javascript player
 //--------------------------------------------------
-/* INDEX
-function jcPlayer(name,element,music_url="", cover_url="", app_url="")
-	this.init  = function(type="")
-	this.button = function(img)
-	this.scroll_to = function(element)
-	this.load  = function(data)
-	this.update = function()
-  		this.audio.onended = function()
-	this.musicStatus = function()
-	this.play  = function()
-	this.pause = function()
-	this.stop  = function()
-	this.next  = function()
-	this.last  = function()
-	this.volumeSet  = function(vol)
-	this.volumeUp   = function()
-	this.volumeDown = function()
-	this.volumeMute = function()
-	this.sort_list = function(tracks)
-	this.sortNumber = function(a,b)
-	this.setTextById = function(id,text)
-	this.printInfoCover = function()
-	this.printInfoShort = function()
-	this.printButtons = function()
-	this.printButtonsStream = function()
-	this.printProgress = function()
-*/
-//--------------------------------------------------
 /* IMPLEMENTATION
 
 var player = new jcPlayer("player","div_player","/music/","/cover/");
@@ -430,5 +402,4 @@ function jcPlayer(name,element,music_url="", cover_url="", app_url="") {
 	// End Of App
 	}
 	
-//----------------------------------
-// EOF
+module_scripts_loaded += 1;

@@ -218,7 +218,4 @@ function fileUpload(callback,param="") {
 
 }
 
-
-//-------------------------
-
-
+module_scripts_loaded += 1;

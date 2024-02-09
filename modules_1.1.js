@@ -4,10 +4,13 @@
 
 console.log("jc://modules/v1.1")
 
+module_scripts_loaded = 0;
+
 modules_js = [
     "jc-app/jc-app-1.4.5.js",
     "jc-functions/jc-functions-0.1.7.js",
     "jc-cookie/jc-cookie.js",
+    "jc-cookie/jc-cookie-auth.js",
     "jc-msg/jc-msg-1.1.7.js",
     "jc-player/jc-player-0.1.7.js",
     "jc-player/jc-volume-slider-0.1.2.js",
@@ -22,6 +25,10 @@ modules_css = [
     "jc-upload/upload.css",
     ];
 
+function modules_loaded() {
+    if (module_scripts_loaded == modules_js.length) { return true; }
+    else                                            { return false; }
+    }
 
 function loadScripts(location, load_scripts) {
     for (var i=0;i<load_scripts.length;i++) {

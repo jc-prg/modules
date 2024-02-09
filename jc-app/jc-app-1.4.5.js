@@ -433,3 +433,5 @@ function jcApp( name, url, list_cmd, send_cmd ) {
   		}
 
 }
+
+module_scripts_loaded += 1;

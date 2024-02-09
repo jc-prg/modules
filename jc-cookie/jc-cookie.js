@@ -3,14 +3,6 @@
 // class to set and read cookies
 // based on: https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript#24103596
 //--------------------------------------
-/* INDEX:
-function jcCookie(app,expire=1)
-	this.set = function(name,value)
-	this.get = function(name)
-	this.erase = function(name)
-*/
-//--------------------------------------
-
 
 function jcCookie(app,expire=1) {
 
@@ -48,6 +40,4 @@ function jcCookie(app,expire=1) {
 		}
 	}
 
-
-//---------------------------------------------------------
-// EOF
+module_scripts_loaded += 1;

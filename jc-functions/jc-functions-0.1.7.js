@@ -418,3 +418,5 @@ function syntaxHighlightJSON(json) {
         return '<span class="' + cls + '">' + match + '</span>';
     });
 }
+
+module_scripts_loaded += 1;

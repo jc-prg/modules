@@ -172,8 +172,7 @@ function jcSlider ( name, container ) {
 		
 	}
 
-//-----------------------------------------
-// EOF
+module_scripts_loaded += 1;
 
 
 

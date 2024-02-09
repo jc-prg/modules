@@ -2,26 +2,6 @@
 //-------------------------------------------------------
 // write messages (instead of Alert, Confirmed, Waiting ...)
 //-------------------------------------------------------
-/* INDEX:
-function jcMsg(app_name,app_link="")
-	this.set_waiting_image = function(image_url)
-	this.message_top	= function(height)
-	this.message_width	= function(width)
-	this.message_height	= function(height)
-	this.message_height_txt = function(height)
-	this.wait_small = function (text="", callback="", callback_label="")
-	this.wait = function (text="", callback="")
-	this.alert = function (msg="",callback="")
-	this.alertReturn = function (data, callback="")
-	this.confirm = function (msg, cmd="", height="", close=true)
-		document.onkeyup = function(event)
-	this.dialog = function()
-	this.show = function (param="")
-	this.hide = function (param="")
-function ifconfirmed(question,funct,param,callback="")
-	// callback function if defined)
-*/
-//-------------------------------------------------------
 
 function jcMsg(app_name,app_link="") {
 
@@ -319,4 +299,4 @@ function ifconfirmed(question,funct,param,callback="") {
 	if (callback!="") { callback(); }
         }
 
-// EOF
+module_scripts_loaded += 1;
