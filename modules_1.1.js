@@ -5,7 +5,7 @@
 console.log("jc://modules/v1.1")
 
 modules_js = [
-    "jc-app/jc-app-1.4.4.js",
+    "jc-app/jc-app-1.4.5.js",
     "jc-functions/jc-functions-0.1.7.js",
     "jc-cookie/jc-cookie.js",
     "jc-msg/jc-msg-1.1.7.js",
