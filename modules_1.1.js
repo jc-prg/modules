@@ -13,7 +13,7 @@ modules_js = [
     "jc-cookie/jc-cookie-auth.js",
     "jc-msg/jc-msg-1.1.7.js",
     "jc-player/jc-player-0.1.7.js",
-    "jc-player/jc-volume-slider-0.1.2.js",
+    "jc-player/jc-volume-slider-0.1.3.js",
     "jc-upload/upload.js",
     ];
 
