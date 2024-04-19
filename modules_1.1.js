@@ -21,7 +21,7 @@ modules_css = [
     "jc-functions/jc-functions-0.1.7.css",
     "jc-msg/jc-msg-1.1.7.css",
     "jc-player/jc-player-0.1.7.css",
-    "jc-player/jc-volume-slider-0.1.2.css",
+    "jc-player/jc-volume-slider-0.1.3 .css",
     "jc-upload/upload.css",
     ];
 
