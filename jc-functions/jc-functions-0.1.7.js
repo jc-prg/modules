@@ -394,6 +394,10 @@ function jcTooltip(name) {
 //--------------------------------
 
 function syntaxHighlightJSON(json) {
+    if (json == undefined) {
+        console.log("syntaxHighlightJSON: got empty value for json.")
+        return;
+    }
     if (typeof json != 'string') {
          json = JSON.stringify(json, undefined, 2);
     }
