@@ -2,7 +2,7 @@
 // jc://modules/
 //--------------------------------
 
-console.log("jc://modules/v1.1")
+console.log("jc://modules/v1.2")
 
 module_scripts_loaded = 0;
 
@@ -11,7 +11,7 @@ modules_js = [
     "jc-functions/jc-functions-0.1.7.js",
     "jc-cookie/jc-cookie.js",
     "jc-cookie/jc-cookie-auth.js",
-    "jc-msg/jc-msg-1.1.7.js",
+    "jc-msg/jc-msg-1.1.8.js",
     "jc-player/jc-player-0.1.7.js",
     "jc-player/jc-volume-slider-0.1.3.js",
     "jc-upload/upload.js",
