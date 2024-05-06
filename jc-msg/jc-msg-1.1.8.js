@@ -98,10 +98,8 @@ function jcMsg(app_name,app_link="") {
 		this.buttons.innerHTML             = buttons;
 		}
 
-	// small message wait including time to close ...
+	// wait message and components ...
 	//-----------------------------
-	
-	
 	this.wait_time = function (text="",time=10) {
 		var message  = text;
 		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time); 
@@ -138,7 +136,7 @@ function jcMsg(app_name,app_link="") {
 			clearInterval(interval);
 			}, time*1000+1000);
 		}
-		
+
 	this.wait_progressbar = function (max=100) {
 		var text = "";
 		var date = new Date().getTime();
@@ -150,9 +148,6 @@ function jcMsg(app_name,app_link="") {
 		return text;
 		}
 		
-
-	// big message wait ...
-	//-----------------------------
 	this.wait = function (text="", callback="") {
 	
 		var height = this.default_height;
@@ -259,11 +254,51 @@ function jcMsg(app_name,app_link="") {
 		this.show();
 		}
 
-	// dialog
+	// information messages (left lower corner)
 	//-----------------------------
 
-	this.dialog = function() {
-		}
+
+    this.info_messages = {}
+    this.info_message_id = 0;
+
+    this.info  = function (message) {
+
+        var message_box = document.getElementById(message_overlay);
+        var timestamp   = Date.now();
+        this.info_messages[timestamp] = message;
+        }
+
+    this.info_message_check = function () {
+
+        var timestamp        = Date.now();
+        var message_box      = document.getElementById(message_overlay);
+        var messages         = "";
+        var message_duration = 10000;
+        var message_delete   = [];
+        for (var key in info_messages) {
+            if (Number(key) + message_duration > timestamp) {
+                messages += "<div class='jc_message_overlay_box'>"+info_messages[key]+"</div>";
+                }
+            else                     { message_delete.push(key); }
+            }
+        setTextById("message_overlay", messages);
+        for (var i=0;i<message_delete.length;i++) {
+            delete this.info_messages[message_delete[i]];
+            }
+        }
+
+    this.info_message_init = function (message_handler) {
+
+        var info_container = document.createElement("div");
+        info_container.classList.add("jc_message_overlay");
+        document.querySelector('body').appendChild(info_container);
+
+        this.info_message_id = setInterval(function() { message_handler.info_message_check(); }, 500);
+        }
+
+    this.info_message_stop = function () {
+        // not implemented yet
+        }
 
 
 	// show message
