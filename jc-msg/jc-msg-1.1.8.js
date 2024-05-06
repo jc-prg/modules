@@ -276,9 +276,9 @@ function jcMsg(app_name,app_link="") {
         var messages         = "";
         var message_duration = 10000;
         var message_delete   = [];
-        for (var key in info_messages) {
+        for (var key in this.info_messages) {
             if (Number(key) + message_duration > timestamp) {
-                messages += "<div class='jc_message_overlay_box'>"+info_messages[key]+"</div>";
+                messages += "<div class='jc_message_overlay_box'>"+this.info_messages[key]+"</div>";
                 }
             else                     { message_delete.push(key); }
             }
@@ -295,7 +295,7 @@ function jcMsg(app_name,app_link="") {
         info_container.classList.add("jc_message_overlay");
         document.querySelector('body').appendChild(info_container);
 
-        this.info_message_id = setInterval(function() { message_handler.info_message_check(); }, 500);
+        this.info_message_id = setInterval(function() { message_handler.info_message_check(message.handler); }, 500);
         }
 
     this.info_message_stop = function () {
