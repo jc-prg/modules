@@ -281,7 +281,7 @@ function jcMsg(app_name,app_link="") {
                 }
             else                     { message_delete.push(key); }
             }
-        setTextById("message_overlay", messages);
+        setTextById("jc_message_overlay", messages);
         for (var i=0;i<message_delete.length;i++) {
             delete this.info_messages[message_delete[i]];
             }
@@ -290,6 +290,7 @@ function jcMsg(app_name,app_link="") {
     this.info_message_init = function (message_handler) {
 
         var info_container = document.createElement("div");
+        info_container.id = "jc_message_overlay";
         info_container.classList.add("jc_message_overlay");
         document.querySelector('body').appendChild(info_container);
 
