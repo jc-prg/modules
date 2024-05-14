@@ -336,7 +336,7 @@ function jcTooltip(name) {
 		this.react_on      = mode;
 		}
 
-	this.create_org   = function (parent_element, tooltip_text, name, left="") {
+	this.create   = function (parent_element, tooltip_text, name, left="") {
 		var react_on_cmd = "";
 		var style_tt     = this.style_tooltip;
 		this.all_elements.push(name);
@@ -357,34 +357,11 @@ function jcTooltip(name) {
 		return text;
 		}
 
-	this.create          = function (parent_element, tooltip_text, name, left="") {
-		var react_on_cmd = "";
-		var style_tt     = this.style_tooltip;
-		this.all_elements.push(name);
-
-		if (this.react_on == "onmouseover")  { react_on_cmd = "onmouseover=\""+this.appName+".show('"+name+"');\" onmouseout=\""+this.appName+".hide('"+name+"');\""; }
-		else if (this.react_on == "onclick") { react_on_cmd = "onclick=\""+this.appName+".toggle('"+name+"');\""; }
-		else if (this.react_on == "other")   {}  // external activation
-
-		var float = "left";
-		if (left == "left") { float = "clear"; }
-
-		var parent_element_type = parent_element.substring(parent_element.indexOf("<")+1, parent_element.indexOf(" "));
-		var text      = parent_element.replace("<"+parent_element_type, "<"+parent_element_type + "  " + react_on_cmd + " ");
-        text += "<span class='jc_tooltip'>";
-        text += "<span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
-        text += "<span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
-        text += "<span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" "+style_tt+">" + tooltip_text + "</span>";
-        text += "</span>";
-		return text;
-		}
-
 	this.create_inside     = function (parent_element, tooltip_text, name, left="") {
 
 		var react_on_cmd1 = "";
 		var react_on_cmd2 = "";
 		var style_tt     = this.style_tooltip;
-		this.tooltips_created.push(name);
 
 		this.all_elements.push(name);
 
