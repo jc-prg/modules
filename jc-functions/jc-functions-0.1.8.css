@@ -1,0 +1,85 @@
+
+/* Tooltip container */
+.jc_tooltip {
+  position : relative;
+  float    : left;
+}
+
+/* Tooltip text */
+.jc_tooltip .jc_tooltiptext {
+	display		    : none;
+  	color		    : #000000;
+  	background-color: lightyellow;
+  	text-align	    : center;
+  	width		    : 180px;
+
+  	padding		    : 3px;
+  	padding-top     : 8px;
+  	padding-bottom  : 8px;
+  	border-radius	: 6px;
+  	border		    : solid gray 1px;
+  	font-size	    : 12px;
+ 
+  	/* Position the tooltip text - see examples below! */
+  	position	    : absolute;
+  	z-index		    : 120;
+  	bottom		    : -41px;
+  	left		    : 10px;
+	}
+
+.jc_tooltip .jc_tooltiptext.left{
+  	left		    : -90px;
+	}
+
+/* triangle to connect tooltip to parent element */
+
+.jc_tooltip .jc_triangle1 {
+	display		    : none;
+  	position	    : absolute;
+    bottom          : -10px;
+    left            : 30px;
+    z-index         : 90;
+    width           : 0;
+    height          : 0;
+    border-left     : 10px solid transparent;
+    border-right    : 10px solid transparent;
+    border-bottom   : 10px solid lightyellow;
+    }
+
+.jc_tooltip .jc_triangle2 {
+    display	        : none;
+    position        : absolute;
+    bottom          : -9px;
+    left            : 29px;
+    z-index         : 89;
+    width           : 0;
+    height          : 0;
+    border-left     : 11px solid transparent;
+    border-right    : 11px solid transparent;
+    border-bottom   : 10px solid black;
+    }
+
+/* replace buttons */
+
+tooltip-button {
+    color         : white;
+    background    : darkblue;
+    border        : 1px solid blue;
+    border-radius : 5px;
+    padding       : 3px;
+    padding-left  : 6px;
+    padding-right : 6px;
+    margin        : 3px;
+    box-shadow    : rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    cursor        : pointer;
+}
+
+/* Synthax Highlighting */
+
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+        
+/*-------------------- */
