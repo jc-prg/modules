@@ -3,6 +3,8 @@
 .jc_tooltip {
   position : relative;
   float    : left;
+  top      : -20px;
+  right    : 20px;
 }
 
 /* Tooltip text */
