@@ -376,7 +376,17 @@ function jcTooltip(name) {
 		tooltip_text = tooltip_text.replaceAll("<button", "<tooltip-button");
 		tooltip_text = tooltip_text.replaceAll("</button", "</tooltip-button");
 
-		var text = parent_element.replace("<"+parent_element_type, "<" + parent_element_type + " " + react_on_cmd + " style=\"overflow:visible;\" ");
+        var text = "";
+        parts    = parent_element.split(">");
+
+        if (parts[0].indexOf("style=") > -1) {
+            text  = parent_element.replace("<"+parent_element_type, "<" + parent_element_type + " " + react_on_cmd + " ");
+            text  = text.replace("style=\"", "style=\"overflow:visible;");
+            text  = text.replace("style='", "style='overflow:visible;");
+		    }
+		else {
+		    text  = parent_element.replace("<"+parent_element_type, "<" + parent_element_type + " " + react_on_cmd + " style=\"overflow:visible;\" ");
+		    }
 		text     = text.replace("</"+parent_element_type+">", "");
         text    += "<span class='jc_tooltip' style='float:left;width:100%'>";
         text    += "  <span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
