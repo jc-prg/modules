@@ -280,8 +280,8 @@ function jcMsg(app_name,app_link="") {
         var message_delete   = [];
         for (var key in this.info_messages) {
             if (Number(key) + message_duration > timestamp) {
-                message, type = this.info_messages[key].split(this.info_split)
-                messages += "<div class='jc_message_overlay_box "+type+"'>"+message+"</div>";
+                var msg, type = this.info_messages[key].split(this.info_split)
+                messages += "<div class='jc_message_overlay_box "+type+"'>"+msg +"</div>";
                 }
             else                     { message_delete.push(key); }
             }
