@@ -96,13 +96,13 @@
 }
 
 .jc_message_overlay_box.ok {
-    background    : #00DD00;
+    background    : #118811;
 }
 
 .jc_message_overlay_box.error {
-    background    : #DD0000;
+    background    : #881111;
 }
 
 .jc_message_overlay_box.info {
-    background    : #0000DD;
+    background    : #111188;
 }
