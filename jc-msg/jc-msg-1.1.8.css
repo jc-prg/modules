@@ -92,7 +92,7 @@
     z-index       : 191;
     border-radius : 5px;
     background    : #888888;
-    opacity       : 90%;
+    opacity       : 0.8;
 }
 
 .jc_message_overlay_box.ok {
