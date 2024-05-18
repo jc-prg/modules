@@ -261,13 +261,14 @@ function jcMsg(app_name,app_link="") {
     this.info_messages = {}
     this.info_message_id = 0;
     this.info_message_duration = 10;
+    this.info_split = "!#!#!";
     this.info_overlay = "jc_message_overlay";
 
     this.info  = function (message, type="") {
 
         var message_box = document.getElementById(this.info_overlay);
         var timestamp   = Date.now();
-        this.info_messages[timestamp] = message + "||||";
+        this.info_messages[timestamp] = message + this.info_split + type;
         }
 
     this.info_message_check = function () {
@@ -279,7 +280,7 @@ function jcMsg(app_name,app_link="") {
         var message_delete   = [];
         for (var key in this.info_messages) {
             if (Number(key) + message_duration > timestamp) {
-                message, type = this.info_messages[key].split("||||")
+                message, type = this.info_messages[key].split(this.info_split)
                 messages += "<div class='jc_message_overlay_box "+type+"'>"+message+"</div>";
                 }
             else                     { message_delete.push(key); }
