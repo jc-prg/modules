@@ -94,3 +94,15 @@
     background    : #888888;
     opacity       : 90%;
 }
+
+.jc_message_overlay_box.ok {
+    background    : #00DD00;
+}
+
+.jc_message_overlay_box.error {
+    background    : #DD0000;
+}
+
+.jc_message_overlay_box.info {
+    background    : #0000DD;
+}

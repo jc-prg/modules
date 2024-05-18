@@ -260,13 +260,14 @@ function jcMsg(app_name,app_link="") {
 
     this.info_messages = {}
     this.info_message_id = 0;
+    this.info_message_duration = 10;
     this.info_overlay = "jc_message_overlay";
 
-    this.info  = function (message) {
+    this.info  = function (message, type) {
 
         var message_box = document.getElementById(this.info_overlay);
         var timestamp   = Date.now();
-        this.info_messages[timestamp] = message;
+        this.info_messages[timestamp] = message + "||||";
         }
 
     this.info_message_check = function () {
@@ -274,11 +275,12 @@ function jcMsg(app_name,app_link="") {
         var timestamp        = Date.now();
         var message_box      = document.getElementById(this.info_overlay);
         var messages         = "";
-        var message_duration = 10000;
+        var message_duration = this.info_message_duration * 1000;
         var message_delete   = [];
         for (var key in this.info_messages) {
             if (Number(key) + message_duration > timestamp) {
-                messages += "<div class='jc_message_overlay_box'>"+this.info_messages[key]+"</div>";
+                message, type = this.info_messages[key].split("||||")
+                messages += "<div class='jc_message_overlay_box "+type+"'>"+message+"</div>";
                 }
             else                     { message_delete.push(key); }
             }
