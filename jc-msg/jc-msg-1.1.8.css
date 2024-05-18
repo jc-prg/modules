@@ -92,17 +92,17 @@
     z-index       : 191;
     border-radius : 5px;
     background    : #888888;
-    opacity       : 0.8;
+    opacity       : 0.9;
 }
 
 .jc_message_overlay_box.ok {
-    background    : #118811;
+    background    : #227722;
 }
 
 .jc_message_overlay_box.error {
-    background    : #881111;
+    background    : #772222;
 }
 
 .jc_message_overlay_box.info {
-    background    : #111188;
+    background    : #222277;
 }
