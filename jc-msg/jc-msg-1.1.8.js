@@ -263,7 +263,7 @@ function jcMsg(app_name,app_link="") {
     this.info_message_duration = 10;
     this.info_overlay = "jc_message_overlay";
 
-    this.info  = function (message, type) {
+    this.info  = function (message, type="") {
 
         var message_box = document.getElementById(this.info_overlay);
         var timestamp   = Date.now();
