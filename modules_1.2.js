@@ -30,7 +30,7 @@ function modules_loaded() {
     else                                            { return false; }
     }
 
-function loadScripts(location, load_scripts) {
+function loadScripts(location, load_scripts, fresh_load=false) {
     for (var i=0;i<load_scripts.length;i++) {
         // check for existing script
         var script = load_scripts[i];
@@ -43,7 +43,8 @@ function loadScripts(location, load_scripts) {
         // load script
         date_id = new Date().getTime();
         js = document.createElement("script");
-        js.src = location + script; // + "?" + date_id);
+        if (fresh_load) { js.src = location + script + "?" + date_id; }
+        else            { js.src = location + script; }
         js.id  = script;
         document.body.appendChild(js);
         js = null;
@@ -54,7 +55,7 @@ function loadScripts(location, load_scripts) {
     }
 }
 
-function loadCss(location, load_css) {
+function loadCss(location, load_css, fresh_load=false) {
     for (var i=0;i<load_css.length;i++) {
         // check if css loaded
         var css_link = load_css[i];
@@ -64,8 +65,10 @@ function loadCss(location, load_css) {
             console.log("--- loadScript: remove " + css_link);
         }
         // load css
+        date_id = new Date().getTime();
         css_element = document.createElement("link");
-        css_element.href = location + css_link;
+        if (fresh_load) { css_element.href = location + css_link + "?" + date_id; }
+        else            { css_element.href = location + css_link; }
         css_element.id = css_link;
         css_element.rel = "stylesheet";
         css_element.type = "text/css";
