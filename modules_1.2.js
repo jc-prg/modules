@@ -4,7 +4,7 @@
 
 console.log("jc://modules/v1.2")
 
-module_scripts_loaded = 8;
+module_scripts_loaded = 0;
 
 modules_js = [
     "jc-app/jc-app-1.4.5.js",
