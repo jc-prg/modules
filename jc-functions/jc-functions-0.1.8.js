@@ -262,6 +262,9 @@ function jcTable(name) {
 		text    += "</tr>";
 		return text;
 		}
+    this.line	= function (text="") {
+		return "<tr><td colspan='100'><hr style='border:1px solid white;'/></td></tr>";
+		}
 	this.row_one	= function (cell) {
 		return "<tr><td colspan=\""+this.columns+"\">" + cell + "</td></tr>";
 		}
