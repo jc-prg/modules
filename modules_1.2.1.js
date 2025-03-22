@@ -7,7 +7,7 @@ console.log("jc://modules/v1.2.1")
 module_scripts_loaded = 0;
 
 modules_js = [
-    "jc-app/jc-app-1.5.0s.js",
+    "jc-app/jc-app-1.5.0.js",
     "jc-functions/jc-functions-0.1.8.js",
     "jc-cookie/jc-cookie.js",
     "jc-cookie/jc-cookie-auth.js",
