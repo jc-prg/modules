@@ -118,6 +118,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			duration = (stamp.getTime() - start_time) / 1000; 
 			this.errorList.unshift(time + ": " + new_msg + " (" + duration + "s)");
 
+            request_url = request_url.replace(this.appUrl + this.appSend, "");
 			if (!this.average_times[request_url])   { this.average_times[request_url] = [duration]; }
 			else                                    { this.average_times[request_url].push(duration); }
 			}
