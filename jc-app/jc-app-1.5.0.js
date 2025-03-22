@@ -276,7 +276,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
                 if (data != null)   { console.debug(app.appName + " " + method + ": " + requestURL + " - OK"); }
                 else                { console.error("No data returned: " + app.appName + " " + method + ": " + requestURL); data = {}; }
 
-                app.errorLog( 'Success: ' + app.appName + ' - <a href=\"' + requestURL + '\">' + requestURL + '</a> (' + xhttp.status + ').',start_time, requestURL);
+                app.errorLog( 'Success: ' + app.appName + ' - <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (' + xhttp.status + ').',start_time, requestURL);
 				app.setStatus('running');
 				app.time();
 				app.appSendData = data;
@@ -307,7 +307,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				// finished (.readyState = 4) but error
 				try		{ var data = JSON.parse(xhttp.responseText); }
 				catch(e)	{ var data = {}; data["detail"] = xhttp.responseText; }
-				app.errorLog('Error: ' + app.appName + ' - ' + method + ' / <a href=\"' + requestURL + '\">' + requestURL + '</a> (not available/' + xhttp.readyState + '/' + xhttp.status + ').', start_time, requestURL);
+				app.errorLog('Error: ' + app.appName + ' - ' + method + ' / <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (not available/' + xhttp.readyState + '/' + xhttp.status + ').', start_time, requestURL);
 				app.errorLog('Error Detail: ' + data["detail"]);
 				app.appSendData = {};
 				app.setStatus("error");
