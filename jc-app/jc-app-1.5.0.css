@@ -1,0 +1,132 @@
+/* Tool tipps for apps */ 
+
+.jc_tooltip {
+    position: relative;
+    display:  block;
+    //background:yellow;
+    /* border-bottom: 1px dotted black; */
+}
+
+.jc_tooltip .jc_tooltiptext {
+    visibility: hidden;
+    width: 250px;
+    background-color: #ffffaa;
+    /* white-space:nowrap; */
+    color: #000000;
+    text-align: center;
+    border-radius: 6px;
+    border-style: solid;
+    border-color: #aaaaaa;
+    border-width: 1px;  
+    box-shadow: 4px 4px 2px #888888;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    left: -20px;
+    z-index: 500;
+    //top: -10px;
+}
+
+.jc_tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+/* Font size and family for Apps in tables */ 
+
+table{
+     font-family     : Helvetica;
+     font-size       : 16px;
+}
+
+/* Buttons for Apps */
+
+.jc_Button {
+     font-size       : 12px;
+     color           : white;
+     padding         :   0px 4px;
+     margin          :   1px;
+     text-align      : center;
+     text-decoration : none;
+     display         : inline-block;
+     border-radius   :   10px;   
+     background-color: darkgray;
+     overflow        : hidden;
+     width           : 50px; 
+     height          : 28px;
+     }
+
+.jc_Button.green {
+     background-color : green;
+     }
+
+.jc_Button.red {
+     background-color : red;
+     }
+
+.jc_Button.yellow {
+     background-color : yellow;
+     color            : #555555;
+     }
+
+.jc_error_log {
+     border           : 2px solid;
+     border-radius    : red;
+     background-color : khaki;
+     text-align       : left;
+     display 	      : none;
+     width   	      : 85%;
+     height           : 140px;
+     font-size        : 12px;
+     margin           : 5px auto;
+     z-index          : 10;
+     opacity          : 0.8;
+     overflow         : auto;
+     }
+
+/* Status Colors for Apps */
+
+#jc_green {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      border: 1px solid green;
+      background: green;
+      margin: 6px;
+    }
+
+#jc_red {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      border: 1px solid red; 
+      background: red;
+      margin: 6px;
+    }
+
+#jc_gray {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      border: 1px solid #111111; 
+      background: lightgray;
+      margin: 6px;
+    }
+
+#jc_yellow {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      border: 1px solid yellow; 
+      background: yellow;
+      margin: 6px;
+    }
