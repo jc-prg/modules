@@ -118,7 +118,6 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			duration = (stamp.getTime() - start_time) / 1000; 
 			this.errorList.unshift(time + ": " + new_msg + " (" + duration + "s)");
 
-            request_url = request_url.replace(this.appUrl + this.appSend, "");
 			if (!this.average_times[request_url])   { this.average_times[request_url] = [duration]; }
 			else                                    { this.average_times[request_url].push(duration); }
 			}
@@ -191,7 +190,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 
 		//console.log(old+"/"+this.lastConnect+"/"+(this.lastConnect-old));
 		}
-		
+
 	// set timeout
 	this.setTimeout	= function(timeout=-1) {
 
@@ -205,7 +204,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
         app.requestAPI("GET",[app.appList],"", app.printFunction,"",source);
         return;
         }
-		
+
 	// start queue
 	this.requestAPI_init = function() {
 		this.use_queue = true;
@@ -226,7 +225,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		if (this.queue.length > 0) {
 			//if (this.queue.length > 1 && this.queue[0] == this.queue[1]) { this.queue.shift(); }
 			[ method, cmd, body_data, callback_array, wait_till_executed, source ] = this.queue[0];
-			this.queue.shift(); 
+			this.queue.shift();
 			this.execute = true;
 			this.requestAPI_execute( method, cmd, body_data, callback_array, wait_till_executed, source );
 			}
@@ -245,9 +244,11 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 		else                                    { callback = callback_array;    callback_param = "";}
 
 		// create request URL
-		var requestURL	 	= this.appUrl + this.appSend + encodeURI(cmd[0]);
+		var requestURL	 	 = this.appUrl + this.appSend + encodeURI(cmd[0]);
+		var requestURL_param = "/" + encodeURI(cmd[0]);
 		for (var i=1;i<cmd.length;i++) {
-			if (cmd[i]) { requestURL += "/" + encodeURI(cmd[i]); }
+			if (cmd[i]) { requestURL       += "/" + encodeURI(cmd[i]); }
+			if (cmd[i]) { requestURL_param += "/" + encodeURI(cmd[i]); }
 			transfer_cmd += cmd[i] + "_";
 			}
 		requestURL += "/";
@@ -277,7 +278,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
                 if (data != null)   { console.debug(app.appName + " " + method + ": " + requestURL + " - OK"); }
                 else                { console.error("No data returned: " + app.appName + " " + method + ": " + requestURL); data = {}; }
 
-                app.errorLog( 'Success: ' + app.appName + ' - <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (' + xhttp.status + ').',start_time, requestURL);
+                app.errorLog( 'Success: ' + app.appName + ' - <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (' + xhttp.status + ').',start_time, requestURL_param);
 				app.setStatus('running');
 				app.time();
 				app.appSendData = data;
@@ -291,13 +292,13 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				if (app.appErrorHide == false) 	app.elementVisible(app.appTarget);
 				if (app.appErrorHide == false) 	app.elementHidden(app.appError);
 				if (app.loadWhenSend) 			app.load("loadWhenSend");
-				
+
 				if (callback != "") {
 					if (callback_param != "") { callback(data,callback_param); }
-					else                      { callback(data); }				
+					else                      { callback(data); }
 					}
 				console.debug(app.appName + ": " + requestURL + " - Finished");
-				
+
 				app.printRequest("SUCCESS", cmd, source);
 				app.execute = false;
 				}
@@ -308,7 +309,7 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 				// finished (.readyState = 4) but error
 				try		{ var data = JSON.parse(xhttp.responseText); }
 				catch(e)	{ var data = {}; data["detail"] = xhttp.responseText; }
-				app.errorLog('Error: ' + app.appName + ' - ' + method + ' / <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (not available/' + xhttp.readyState + '/' + xhttp.status + ').', start_time, requestURL);
+				app.errorLog('Error: ' + app.appName + ' - ' + method + ' / <a href=\"' + requestURL + '\" target=\"_blank\">' + requestURL + '</a> (not available/' + xhttp.readyState + '/' + xhttp.status + ').', start_time, requestURL_param);
 				app.errorLog('Error Detail: ' + data["detail"]);
 				app.appSendData = {};
 				app.setStatus("error");
