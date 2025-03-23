@@ -121,8 +121,14 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 			var url_parts = request_url.split("/");
 	        if (/^\d+$/.test(url_parts[1])) { request_url = request_url.replace("/" + url_parts[1],""); }
 
-			if (!this.average_times[request_url])   { this.average_times[request_url] = [duration]; }
-			else                                    { this.average_times[request_url].push(duration); }
+			if (!this.average_times[request_url]) {
+			    this.average_times[request_url] = [duration];
+			    }
+			else {
+			    this.average_times[request_url].push(duration);
+			    if (this.average_times[request_url].length > 20) { this.average_times[request_url].shift(); }
+			    }
+
 			}
 		else {
 			this.errorList.unshift(time + ": " + new_msg);
