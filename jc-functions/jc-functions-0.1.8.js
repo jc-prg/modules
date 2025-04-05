@@ -376,8 +376,10 @@ function jcTooltip(name) {
 
 		var parent_element_type = parent_element.substring(parent_element.indexOf("<")+1, parent_element.indexOf(" "));
 
-		tooltip_text = tooltip_text.replaceAll("<button", "<tooltip-button");
-		tooltip_text = tooltip_text.replaceAll("</button", "</tooltip-button");
+        if (tooltip_text.replaceAll) {
+            tooltip_text = tooltip_text.replaceAll("<button", "<tooltip-button");
+            tooltip_text = tooltip_text.replaceAll("</button", "</tooltip-button");
+            }
 
         var text = "";
         parts    = parent_element.split(">");
