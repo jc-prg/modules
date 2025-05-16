@@ -4,7 +4,6 @@
 //-------------------------------------------------------
 
 function jcMsg(app_name,app_link="") {
-
 	this.appName     = app_name;
 	this.appLink     = app_name;
 	this.appVersion  = "v1.1.8";
