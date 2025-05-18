@@ -61,7 +61,7 @@ function loadCss(location, load_css, fresh_load=false) {
         var css_link = load_css[i];
         var css_element = document.getElementById(css_link);
         if (css_element != null) {
-            document.head.removeChild(js);
+            document.head.removeChild(css_element);
             console.log("--- loadScript: remove " + css_link);
         }
         // load css
