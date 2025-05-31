@@ -44,16 +44,18 @@ function jcMsg(app_name,app_link="") {
 	//-----------------------------
 
 	this.message_top	= function(height) {
-	        var top = ((window.innerHeight - height) / 2) - 10; 
-	        if (top < 10) { top = 10; }
-		return top;
+	    if (typeof height == "string" && height.indexOf("px") > 0) { height = height.replace("px",""); }
+
+        var top = ((window.innerHeight - height) / 2) - 10;
+        if (top < 10) { top = 10; }
+        return top;
 		}
-		
+
 	this.message_width	= function(width) {
 		if (width > window.innerWidth - 60) { return window.innerWidth - 60; }
 		else                                { return width; }
 		}
-		
+
 	this.message_height	= function(height) {
 		if (height > window.innerHeight - 80) { return window.innerHeight - 80; }
 		else                                  { return height; }
@@ -61,7 +63,7 @@ function jcMsg(app_name,app_link="") {
 	this.message_height_txt = function(height) {
 		var top_button = 70;
 		if (height > window.innerHeight - 80) { return window.innerHeight - 80 - top_button; }
-		else                                  { return height - 50; }	
+		else                                  { return height - 50; }
 		}
 
 	// small message wait ...
@@ -81,7 +83,7 @@ function jcMsg(app_name,app_link="") {
 		this.body.style.width              = this.message_width(this.default_width)+"px";
 		this.body.style.height             = this.message_height(height)+"px";
 		this.body.style.top                = this.message_top(height)+"px";
-		
+
 		this.text.style.top                = "10px";
 		this.text.style.width              = (this.message_width(this.default_width)-20)+"px";
 		this.text.style.maxWidth           = (this.message_width(this.default_width)-20)+"px";
@@ -101,7 +103,7 @@ function jcMsg(app_name,app_link="") {
 	//-----------------------------
 	this.wait_time = function (text="",time=10) {
 		var message  = text;
-		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time); 
+		message     += "<br/>&nbsp;<br/>"+this.wait_progressbar(time);
 		this.wait_small(message, "", "Cancel");
 
         var time_start = new Date().getTime() / 1000;
@@ -129,7 +131,7 @@ function jcMsg(app_name,app_link="") {
     			clearInterval(interval);
 			    }
 			},1000);
-			
+
 		setTimeout(function () {
 			app.hide();
 			clearInterval(interval);
@@ -146,11 +148,11 @@ function jcMsg(app_name,app_link="") {
 		text += '<info id="' + this.appName + '_wait_max" style="display:none">' + max + '</info>';
 		return text;
 		}
-		
+
 	this.wait = function (text="", callback="") {
-	
+
 		var height = this.default_height;
-		
+
 		this.show();
 		this.body.style.backgroundImage     = "url('"+this.waiting_img[0]+"')";
 		this.body.style.backgroundRepeat    = "no-repeat";
@@ -166,7 +168,7 @@ function jcMsg(app_name,app_link="") {
 		this.text.style.height              = this.message_height_txt(height)+"px";
 		this.text.style.maxHeight           = this.message_height_txt(height)+"px";
 		this.text.innerHTML                 = "<center><b><br/>" + text + "</b></center>";
-		
+
 		this.buttons.style.top          = "10px";
 		var buttons                     = "<center><button class='jcMsgButton' onClick='" + this.appLink +".hide();'>dont wait</button>";
 
@@ -177,9 +179,9 @@ function jcMsg(app_name,app_link="") {
 	// alert message (OK button)
 	//-----------------------------
 	this.alert = function (msg="",callback="") {
-	
+
 		var height = 140;
-	
+
 		this.body.style.width           = this.message_width(this.default_width)+"px";
 		this.body.style.height          = this.message_height(height) + "px";
 		this.body.style.top             = this.message_top(height) + "px";
@@ -193,7 +195,7 @@ function jcMsg(app_name,app_link="") {
 
 		if (callback != "")             { callback_cmd = callback + "();"; }
 		else                            { callback_cmd = ""; }
-		
+
 		this.buttons.style.top          = "10px";
 		this.buttons.innerHTML          =  "<center><button class='jcMsgButton' onClick='" + this.appLink +".hide();"+callback_cmd+"'>OK</button> ";
 		this.show();
@@ -255,15 +257,19 @@ function jcMsg(app_name,app_link="") {
 
 	// confirm message
 	//-----------------------------
-	this.dialog = function (msg, cmd="", height="", width="", close=true) {
+	this.dialog = function (msg, cmd="", height="", width="", close=true, cmd_buttons=undefined) {
 
 		if (height == "") { height = "80"; }
 		if (width == "")  { width  = "90"; }
 		if (cmd != "")    { cmd = cmd.replaceAll("##","''");
                             cmd = cmd.replaceAll("#","'"); }
 
-		this.body.style.width       = width + "%";
-		this.body.style.height      = height + "%";
+        if (width.indexOf("px") < 0 && width.indexOf("%") < 0)   { width += "%"; }
+        if (height.indexOf("px") < 0 && height.indexOf("%") < 0) { top_height = ((100-height)/2); height += "%"; }
+        else                                                     { top_height = this.message_top(height)+"px";}
+
+		this.body.style.width       = width;
+		this.body.style.height      = height;
 		this.body.style.top         = ((100-height)/2) + "%";
 
 		this.text.style.top         = "10px";
@@ -278,11 +284,27 @@ function jcMsg(app_name,app_link="") {
 		if (close) { hideCmd = this.appLink +".hide();"; }
 		else       { console.log("Hide dialog with cmd "+this.appLink +".hide();"); }
 
-		var buttons                = "<center>";
-		if (cmd != "") { buttons  += "<button id=\"" + this.appName + "_ok\" class='jcMsgButton' onClick=\"" + hideCmd + ";" + cmd +";\">OK</button>&nbsp; &nbsp;";	}
-		buttons                   += "<button id=\"" + this.appName + "_chancel\" class='jcMsgButton' onClick=\"" + this.appLink +".hide();\">Cancel</button></center>";
+		var buttons = [];
+        if (cmd_buttons) {
+            Object.entries(cmd_buttons).forEach(([key,entry])=> {
+                entry = cmd_buttons[key][1];
+                if (close)                { entry  = this.appLink + ".hide();" + entry; }
+                else if (key == "CLOSE")  { entry  = this.appLink + ".hide();"; }
+                button  = "<button id='" + this.appName + "_btn_" + key +"' class='jcMsgButton' onclick=\"" + entry + "\">";
+                button += cmd_buttons[key][0];
+                button += "</button>";
+                buttons.push(button);
+                i++;
+                });
+            }
+        else {
+            if (cmd != "")  {
+                buttons.push("<button id=\"" + this.appName + "_ok\" class='jcMsgButton' onClick=\"" + hideCmd + ";" + cmd +";\">OK</button>");
+                }
+            buttons.push("<button id=\"" + this.appName + "_chancel\" class='jcMsgButton' onClick=\"" + this.appLink +".hide();\">Cancel</button>");
+            }
 
-		this.buttons.innerHTML             = buttons;
+		this.buttons.innerHTML             = "<center>" + buttons.join("&nbsp;&nbsp;") + "</center>";
 
 		//---------------------------------------
 		// Set Hot Keys ==> move to messages
