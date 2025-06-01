@@ -3,7 +3,7 @@
 //-------------------------
 
 var jc_functions_name    = "jc://functions/";
-var jc_functions_version = "v1.8.0";
+var jc_functions_version = "v1.8.1";
 
 
 // call different commands for left and right mousebutton
@@ -154,17 +154,17 @@ function elementHidden(id,debug="") {
   else                                  { console.debug("Element not found: "+id+" (elementHidden)"); }
   }
 
-function elementVisible(id) {
-  if (document.getElementById(id))      { document.getElementById(id).style.display = "block"; }
+function elementVisible(id, type="block") {
+  if (document.getElementById(id))      { document.getElementById(id).style.display = type; }
   else                                  { console.debug("Element not found: "+id+" (elementVisible)"); }
   }
 
-function changeVisibility(id,show="") {
+function changeVisibility(id, show="", type="block") {
 	if (show == "") {
-		if (isHidden(id))  { elementVisible(id); }
+		if (isHidden(id))  { elementVisible(id, type); }
 		else               { elementHidden(id); }
 		}
-	else if (show == true)	   { elementVisible(id); }
+	else if (show == true)	   { elementVisible(id, type); }
 	else if (show == false)    { elementHidden(id); }
   }
 
