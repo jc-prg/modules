@@ -3,7 +3,7 @@
 //-------------------------
 
 var jc_functions_name    = "jc://functions/";
-var jc_functions_version = "v1.8.1";
+var jc_functions_version = "v0.1.8.1";
 
 
 // call different commands for left and right mousebutton
