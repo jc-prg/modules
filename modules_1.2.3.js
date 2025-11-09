@@ -8,8 +8,8 @@ module_scripts_loaded = 0;
 
 modules_js = [
     "jc-app/jc-app-1.5.0.js",
-    "jc-functions/jc-functions-0.1.9.js",
     "jc-cookie/jc-cookie.js",
+    "jc-functions/jc-functions-0.1.9.js",
     "jc-cookie/jc-cookie-auth.js",
     "jc-msg/jc-msg-1.1.9.js",
     "jc-player/jc-player-0.1.7.js",
