@@ -41,6 +41,9 @@ function jcApp( name, url, list_cmd, send_cmd ) {
 	this.appIntervalCall  = -1;
 	this.appIntervalTemp  = -1; // -1 -> enable temp interval -> this.appUpdateTemp in seconds
 
+    this.errorLogRequest = false;
+    this.error2ndOutput  = "";
+
 	this.errorList       = [];
 	this.errorCount      = 50;
 	this.loadWhenSend    = false;
