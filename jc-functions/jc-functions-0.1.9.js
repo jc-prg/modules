@@ -3,7 +3,7 @@
 //-------------------------
 
 var jc_functions_name    = "jc://functions/";
-var jc_functions_version = "v0.1.8.1";
+var jc_functions_version = "v0.1.9";
 
 
 // call different commands for left and right mousebutton
@@ -338,7 +338,105 @@ function jcLogging(name) {
 	}
 
 //--------------------------------
-// tool tip
+// tool tip v2
+//--------------------------------
+
+class JcTooltip2 {
+    constructor(name) {
+        this.app_name = name;
+    }
+
+    /* add tool tip data to elements auf a specific type */
+    create(element_types, text, tooltip_text) {
+
+        if (typeof element_types === 'string') {
+            element_types = [element_types];
+        }
+        for (let element_type of element_types) {
+            if (text.indexOf("<" + element_type) === 0) {
+                text = text.replace("<" + element_type + " ", "<" + element_type + " data-tooltip=\"" + tooltip_text + "\" ");
+            }
+        }
+        return text;
+    }
+
+    load(element_types = ["button"]) {
+        let count = 0;
+        let double = false;
+        // Für jeden Button mit Tooltip-Attribut Tooltip erzeugen
+        if (typeof element_types === 'string') {
+            element_types = [element_types];
+        }
+        for (let element_type of element_types) {
+            document.querySelectorAll(element_type + "[data-tooltip]").forEach(button => {
+                if (button.innerHTML.indexOf("jc-tooltip-v2") < 0) {
+
+                    count += 1;
+                    const html = button.getAttribute("data-tooltip");
+                    const tooltip = document.createElement("span");
+                    tooltip.className = "jc-tooltip-v2";
+                    tooltip.innerHTML = html.replaceAll("##", "\"");
+                    tooltip.dataset.position = "bottom"; // Standard
+                    button.appendChild(tooltip);
+
+                    if (tooltip.style.overflow === "hidden") {
+                        let id = tooltip.id;
+                        if (!id) {
+                            id = "";
+                        }
+                        console.error("JcTooltip2.load: The element " + element_type + " (" + id + ") has the style overflow=hidden, but it has to be visible for the tooltips.");
+                    }
+
+                    // Tooltip-Position prüfen und dynamisch anpassen
+                    button.addEventListener("mouseenter", () => {
+                        const rect = button.getBoundingClientRect();
+                        const tooltipRect = tooltip.getBoundingClientRect();
+
+                        // Platz nach unten und oben im Viewport prüfen
+                        const spaceBelow = window.innerHeight - rect.bottom;
+                        const spaceAbove = rect.top;
+
+                        // Wenn unten nicht genug Platz -> Tooltip oben anzeigen
+                        if (spaceBelow < tooltipRect.height + 20 && spaceAbove > tooltipRect.height + 20) {
+                            tooltip.dataset.position = "top";
+                        } else {
+                            tooltip.dataset.position = "bottom";
+                        }
+
+                        tooltip.style.opacity = "1";
+                        tooltip.style.visibility = "visible";
+                    });
+
+                    // Tooltip unsichtbar, wenn Maus komplett weg ist
+                    button.addEventListener("mouseleave", () => {
+                        if (!tooltip.matches(':hover')) {
+                            tooltip.style.opacity = "0";
+                            tooltip.style.visibility = "hidden";
+                        }
+                    });
+
+                    tooltip.addEventListener("mouseleave", () => {
+                        tooltip.style.opacity = "0";
+                        tooltip.style.visibility = "hidden";
+                    });
+                } else {
+                    double = true;
+                }
+            });
+            if (count === 0 && !double) {
+                console.error("Did not find '" + element_type + "' elements with tooltip data, such as <" + element_type + " data-tooltip='test'>test</" + element_type + ">");
+            } else if (double) {
+                console.warn("Found already tooltips for '" + element_type + "' elements.");
+            } else {
+                console.info("Added " + count + " tooltips.")
+            }
+        }
+    }
+}
+
+
+//--------------------------------
+// tool tip v1
 //--------------------------------
 
 function jcTooltip(name) {
@@ -383,11 +481,15 @@ function jcTooltip(name) {
 		var float = "left";
 		if (left == "left") { float = "clear"; }
 		var text  = "";
-	        text += "<span class='jc_tooltip' "+react_on_cmd+" style='float:"+float+";'>";
+	        //text += "<span class='jc_tooltip' "+react_on_cmd+" style='float:"+float+";'>";
+	        text += "<span class='jc_tooltip' "+react_on_cmd+" style=''>";
 	        text += parent_element;
-	        text += "<span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
-        	text += "<span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
-	        text += "<span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" style=\""+style_tt+"\">" + tooltip_text + "</span>";
+//	        text += "<span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
+//        	text += "<span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
+//	        text += "<span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" style=\""+style_tt+"\">" + tooltip_text + "</span>";
+	        text += "<span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" ></span>";
+        	text += "<span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" ></span>";
+	        text += "<span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" >" + tooltip_text + "</span>";
         	text += "</span>";
 		return text;
 		}
@@ -421,10 +523,14 @@ function jcTooltip(name) {
 		    text  = parent_element.replace("<"+parent_element_type, "<" + parent_element_type + " " + react_on_cmd + " style=\"overflow:visible;\" ");
 		    }
 		text     = text.replace("</"+parent_element_type+">", "");
-        text    += "<span class='jc_tooltip' style='float:left;width:100%'>";
-        text    += "  <span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
-        text    += "  <span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
-        text    += "  <span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\"  style=\""+style_tt+"\">" + tooltip_text + "</span>";
+        //text    += "<span class='jc_tooltip' style='float:left;width:100%'>";
+        text    += "<span class='jc_tooltip' style=''>";
+//        text    += "  <span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" style=\""+this.style_offset[1]+"\"></span>";
+//        text    += "  <span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" style=\""+this.style_offset[2]+"\"></span>";
+//        text    += "  <span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\"  style=\""+style_tt+"\">" + tooltip_text + "</span>";
+        text    += "  <span class='jc_triangle1' id=\"jc_triangle1_" + name + "\" ></span>";
+        text    += "  <span class='jc_triangle2' id=\"jc_triangle2_" + name + "\" ></span>";
+        text    += "  <span class=\"jc_tooltiptext " + left + "\" id=\"jc_tooltiptext_" + name + "\" >" + tooltip_text + "</span>";
         text    += "</span>";
         text    += "</"+parent_element_type+">";
 		return text;

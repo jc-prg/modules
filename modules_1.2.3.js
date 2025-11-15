@@ -18,7 +18,7 @@ modules_js = [
     ];
 
 modules_css = [
-    "jc-functions/jc-functions-0.1.8.css",
+    "jc-functions/jc-functions-0.1.9.css",
     "jc-msg/jc-msg-1.1.9.css",
     "jc-player/jc-player-0.1.7.css",
     "jc-player/jc-volume-slider-0.1.3.css",
