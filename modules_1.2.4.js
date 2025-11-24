@@ -2,8 +2,7 @@
 // jc://modules/
 //--------------------------------
 
-console.log("jc://modules/v1.2.4")
-
+let modules_version = "v1.2.4";
 let module_scripts_loaded = 0;
 
 const modules_js = [
@@ -23,6 +22,8 @@ const modules_css = [
     "jc-player/jc-volume-slider-0.1.3.css",
     "jc-upload/upload.css",
     ];
+
+console.log("jc://modules/" + modules_version);
 
 
 /* check if all scripts are loaded */
