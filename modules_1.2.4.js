@@ -88,7 +88,7 @@ function loadCss(location, load_css, fresh_load=false) {
 
 
 /* reload dynamically loaded javascript files */
-function reloadScripts() {
+function reloadScripts(overwrite_existing=false) {
     console.log("--- Reloading dynamic JS ---");
     const date_id = new Date().getTime();
     let count = 0;
@@ -100,9 +100,11 @@ function reloadScripts() {
         node.src = src + "?" + date_id;
 
         // add another version to overwrite existing scripts and values
-        const s = document.createElement("script");
-        s.src = src + "?" + date_id;
-        document.body.appendChild(s);
+        if (overwrite_existing) {
+            const s = document.createElement("script");
+            s.src = src + "?" + date_id;
+            document.body.appendChild(s);
+        }
 
         count++;
     });
