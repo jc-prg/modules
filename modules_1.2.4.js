@@ -91,12 +91,15 @@ function loadCss(location, load_css, fresh_load=false) {
 function reloadScripts() {
     console.log("--- Reloading dynamic JS ---");
     const date_id = new Date().getTime();
+    let count = 0;
 
     // Reload JS
     document.querySelectorAll("script[data-dynamic='1']").forEach(node => {
         const src = node.src.split("?")[0];
         node.src = src + "?" + date_id;
+        count++;
     });
+    return count;
 }
 
 
@@ -104,17 +107,22 @@ function reloadScripts() {
 function reloadCss() {
     console.log("--- Reloading dynamic CSS ---");
     const date_id = new Date().getTime();
+    let count = 0;
 
     // Reload CSS
     document.querySelectorAll("link[data-dynamic='1']").forEach(node => {
         const href = node.href.split("?")[0];
         node.href = href + "?" + date_id;
+        count++;
     });
+    return count;
 }
 
 
 /* reload dynamically loaded javascript and CSS files */
 function reloadScriptsAndCss() {
-    reloadScripts();
-    reloadCss()
+    let count = 0;
+    count += reloadScripts();
+    count += reloadCss();
+    alert("Reloaded in total " + count + " CSS and JavaScript files!");
 }
