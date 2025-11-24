@@ -95,8 +95,15 @@ function reloadScripts() {
 
     // Reload JS
     document.querySelectorAll("script[data-dynamic='1']").forEach(node => {
+        // reload
         const src = node.src.split("?")[0];
         node.src = src + "?" + date_id;
+
+        // add another version to overwrite existing scripts and values
+        const s = document.createElement("script");
+        s.src = src + "?" + date_id;
+        document.body.appendChild(s);
+
         count++;
     });
     return count;
