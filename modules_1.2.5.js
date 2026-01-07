@@ -4,6 +4,7 @@
 
 let modules_version = "v1.2.5";
 let module_scripts_loaded = 0;
+let module_js_loaded = { status: 0 };
 
 const modules_js = [
     "jc-app/jc-app-1.5.0.js",
@@ -14,14 +15,14 @@ const modules_js = [
     "jc-player/jc-player-0.1.7.js",
     "jc-player/jc-volume-slider-0.1.3.js",
     "jc-upload/upload.js",
-    ];
+];
 const modules_css = [
     "jc-functions/jc-functions-0.1.9.css",
     "jc-msg/jc-msg-1.1.9.css",
     "jc-player/jc-player-0.1.7.css",
     "jc-player/jc-volume-slider-0.1.3.css",
     "jc-upload/upload.css",
-    ];
+];
 
 console.log("jc://modules/" + modules_version);
 
@@ -29,11 +30,11 @@ console.log("jc://modules/" + modules_version);
 /* check if all scripts are loaded */
 function modules_loaded() {
     return module_scripts_loaded === modules_js.length;
-    }
+}
 
 
 /* load javascript files dynamically */
-function loadScripts(location, load_scripts, fresh_load=false, loaded_count) {
+function loadScripts(location, load_scripts, fresh_load=false) {
     for (let i=0;i<load_scripts.length;i++) {
         // check for existing script
         let script = load_scripts[i];
@@ -55,16 +56,18 @@ function loadScripts(location, load_scripts, fresh_load=false, loaded_count) {
 
         let check = document.getElementById(script);
         let loaded = "";
-
-        if (loaded_count !== "") {
-            let loaded = " (" + eval(loaded_count) + "/" + load_scripts.length + ")"; ") ";
-            const info_loaded = document.getElementById("info_loaded");
-            if (info_loaded) {
-                info_loaded.innerHTML = "Loading scripts from " + location.replaceAll("/","") + " ... " + eval(loaded_count) + "/" + load_scripts.length;
-            }
-        }
         if (check == null)  { console.log("--- loadScript: failed to load " + location + script + loaded); } // + "?" + date_id); }
         else                { console.log("--- loadScript: load " + location + script + loaded); } // + "?" + date_id); }
+    }
+}
+
+function loadScriptsOk (location, load_scripts, load_count) {
+    if (load_count === load_scripts.length) {
+        console.log("--- loadScript "+location+" OK!");
+        return true;
+    } else {
+        console.error("--- loadScript "+location+" failed, only " + load_count + "/" + load_scripts.length + " loaded!");
+        return false;
     }
 }
 
